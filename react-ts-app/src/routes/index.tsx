@@ -41,7 +41,7 @@ const routes =  [
   { path: '/paper', element: <Navigate to='/paper/paper-bank' /> },
   { path: '/paper/paper-bank', element: <PaperBank />, home: true  },
   { path: '/paper/create-paper', element: <AddPaper />, home: true  },
-  { path: '/login', element: <Login /> },
+  { path: '/user/login', element: <Login /> },
   { path: '*', element: <NotFound /> }
 ]
 
