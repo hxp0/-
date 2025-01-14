@@ -1,25 +1,25 @@
-import Home from '../pages/home/Home'
+import Layout from '../layout/Layout'
 import Login from '../pages/login/Login'
 import NotFound from '../pages/notFound/NotFound'
-import Record from '../pages/home/secondPages/exam/components/record/Record'
-import Create from '../pages/home/secondPages/exam/components/create/Create'
+import Record from '../pages/exam/record/Record'
+import Create from '../pages/exam/create/Create'
 import { lazy } from 'react'
 import { Navigate } from 'react-router-dom'
 
-export const ClassList = lazy(()=> import('../pages/home/secondPages/class/components/classList/ClassList'))
-export const Student = lazy(()=> import('../pages/home/secondPages/class/components/student/Student'))
+export const ClassList = lazy(()=> import('../pages/class/classList/ClassList'))
+export const Student = lazy(()=> import('../pages/class/student/Student'))
 
-export const Role = lazy(()=> import('../pages/home/secondPages/system/components/role/Role'))
-export const Power = lazy(()=> import('../pages/home/secondPages/system/components/power/Power'))
-export const Mine = lazy(()=> import('../pages/home/secondPages/system/components/mine/Mine'))
-export const User = lazy(()=> import('../pages/home/secondPages/system/components/user/User'))
-export const UserManage = lazy(()=> import('../pages/home/secondPages/system/components/userManage/UserManage'))
+export const Role = lazy(()=> import('../pages/system/role/Role'))
+export const Power = lazy(()=> import('../pages/system/power/Power'))
+export const Mine = lazy(()=> import('../pages/system/mine/Mine'))
+export const User = lazy(()=> import('../pages/system/user/User'))
+export const UserManage = lazy(()=> import('../pages/system/userManage/UserManage'))
 
-export const ItemBank = lazy(()=> import('../pages/home/secondPages/questions/components/itemBank/ItemBank'))
-export const AddItem = lazy(()=> import('../pages/home/secondPages/questions/components/addItem/AddItem'))
+export const ItemBank = lazy(()=> import('../pages/questions/itemBank/ItemBank'))
+export const AddItem = lazy(()=> import('../pages/questions/addItem/AddItem'))
 
-export const PaperBank = lazy(()=> import('../pages/home/secondPages/testPaper/components/paperBank/PaperBank'))
-export const AddPaper = lazy(()=> import('../pages/home/secondPages/testPaper/components/addPaper/AddPaper'))
+export const PaperBank = lazy(()=> import('../pages/testPaper/paperBank/PaperBank'))
+export const AddPaper = lazy(()=> import('../pages/testPaper/addPaper/AddPaper'))
 
 const routes =  [
   { path: '/', element: <Navigate to="/exam" /> },
@@ -49,7 +49,7 @@ export default routes.map(route => {
   if( route.home ){
     return {
       ...route,
-      element: <Home>{route.element}</Home>
+      element: <Layout>{route.element}</Layout>
     }
   }
   return route

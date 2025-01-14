@@ -16,7 +16,7 @@ import defaultProps from './_defaultProps';
 import { useNavigate, useLocation } from 'react-router-dom'
 
 
-const Home: React.FC<{ children: React.ReactNode }> = (props) => {
+const Layout: React.FC<{ children: React.ReactNode }> = (props) => {
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -150,4 +150,4 @@ const Home: React.FC<{ children: React.ReactNode }> = (props) => {
   );
 };
 
-export default Home
+export default Layout
