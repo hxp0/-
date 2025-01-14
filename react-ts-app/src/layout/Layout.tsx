@@ -11,15 +11,46 @@ import {
   ConfigProvider,
   Dropdown,
 } from 'antd';
-import React, { useState } from 'react';
-import defaultProps from './_defaultProps';
+import React, {  useMemo } from 'react';
+// import defaultProps from './_defaultProps';
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux';
+import type { RootState } from '../store';
+import {
+  CrownFilled
+} from '@ant-design/icons';
 
 
 const Layout: React.FC<{ children: React.ReactNode }> = (props) => {
   const location = useLocation()
   const navigate = useNavigate()
-
+  const menuList = useSelector((state: RootState) => state.menuList.menuList)
+  const list = useMemo(()=>{
+    const arr:any = {
+      route:{
+        path: '/',
+        routes:[]
+      }
+    }
+    if(menuList.length !==0){
+      menuList.forEach((item:any)=>{
+        arr.route.routes.push({
+          path: item.path,
+          name: item.name,
+          icon: <CrownFilled />,
+          routes:item.children.map((v:any)=>{
+            return {
+              path: v.path,
+              name: v.name,
+              icon: <CrownFilled />
+            }
+          })
+        })
+    })
+  }
+    return arr
+  },[menuList])
+  console.log('列表', list)
 
   if (typeof document === 'undefined') {
     return <div />;
@@ -59,7 +90,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = (props) => {
                 width: '331px',
               },
             ]}
-            {...defaultProps}
+            {...list}
             location={{
               pathname: location.pathname,
             }}
