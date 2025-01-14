@@ -37,7 +37,7 @@ const Login: React.FC = () => {
         message.error(res.data.msg)
         getCaptcha()
       }else if( res.data.code === 200 ){
-        localStorage.setItem('token', res.data.data?.code!)
+        localStorage.setItem('token', res.data.data?.token!)
         navigate('/')
         message.success('登录成功')
       }

@@ -15,6 +15,6 @@ export type LoginType = {
   code: number
   msg: string
   data?: {
-    code: string
+    token: string
   }
 }
