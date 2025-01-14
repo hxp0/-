@@ -19,6 +19,7 @@ import type { RootState } from '../store';
 import {
   CrownFilled
 } from '@ant-design/icons';
+import { logoutApi } from '../services';
 
 
 const Layout: React.FC<{ children: React.ReactNode }> = (props) => {
@@ -159,6 +160,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = (props) => {
             fixSiderbar={true}
             layout="mix"
             splitMenus={true}
+            
           >
             <PageContainer
               token={{
