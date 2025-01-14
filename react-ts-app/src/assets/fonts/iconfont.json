@@ -1,0 +1,93 @@
+{
+  "id": "4810372",
+  "name": "project",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "2077587",
+      "name": "退出",
+      "font_class": "tuichu",
+      "unicode": "e645",
+      "unicode_decimal": 58949
+    },
+    {
+      "icon_id": "4765852",
+      "name": "reload",
+      "font_class": "reload",
+      "unicode": "e788",
+      "unicode_decimal": 59272
+    },
+    {
+      "icon_id": "4765891",
+      "name": "setting",
+      "font_class": "setting",
+      "unicode": "e78e",
+      "unicode_decimal": 59278
+    },
+    {
+      "icon_id": "4766475",
+      "name": "file-unknown",
+      "font_class": "file-unknown",
+      "unicode": "e7b9",
+      "unicode_decimal": 59321
+    },
+    {
+      "icon_id": "5461956",
+      "name": "两个人",
+      "font_class": "lianggeren",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "6337498",
+      "name": "编辑",
+      "font_class": "tianxie",
+      "unicode": "ec88",
+      "unicode_decimal": 60552
+    },
+    {
+      "icon_id": "7239804",
+      "name": "lock",
+      "font_class": "lock",
+      "unicode": "e73c",
+      "unicode_decimal": 59196
+    },
+    {
+      "icon_id": "7239814",
+      "name": "menu-unfold",
+      "font_class": "menu-unfold",
+      "unicode": "e73e",
+      "unicode_decimal": 59198
+    },
+    {
+      "icon_id": "19849033",
+      "name": "user",
+      "font_class": "user",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "39643681",
+      "name": "column-height",
+      "font_class": "column-height",
+      "unicode": "e659",
+      "unicode_decimal": 58969
+    },
+    {
+      "icon_id": "39643954",
+      "name": "snippets",
+      "font_class": "snippets",
+      "unicode": "e66e",
+      "unicode_decimal": 58990
+    },
+    {
+      "icon_id": "40071527",
+      "name": "crown",
+      "font_class": "crown",
+      "unicode": "eacc",
+      "unicode_decimal": 60108
+    }
+  ]
+}
