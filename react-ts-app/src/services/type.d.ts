@@ -12,13 +12,9 @@ export type CaptchaType = { code: string }
 export type LoginParams = Record<'username' | 'password' | 'code', string>
 
 // 登录返回值类型
-export type LoginType = {
-  code: number
-  msg: string
-  data?: {
+export type LoginType =  {
     token: string
   }
-}
 
 // info返回值类型
 export type InfoResType = {

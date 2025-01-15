@@ -18,6 +18,7 @@ const infoSlice = createSlice({
   extraReducers:builder => {
     builder
       .addCase(getInfo.fulfilled, (state, action) => {
+        // console.log(action.payload)
         state.info = action.payload.data!
         localStorage.setItem('permission', JSON.stringify(state.info.permission))
       })

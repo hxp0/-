@@ -13,8 +13,10 @@ import { message, theme } from 'antd'
 import { getCaptchaApi, getLoginApi } from '../../services'
 import type { LoginParams } from '../../services/type'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from'react-redux'
-import type { RootState } from '../../store'
+import { useSelector, useDispatch } from'react-redux'
+import type { RootState, AppDispatch } from '../../store'
+import { getInfo } from '../../store/models/info'
+import { getMenuList } from '../../store/models/menulist'
 
 
 const Login: React.FC = () => {
@@ -22,19 +24,19 @@ const Login: React.FC = () => {
   const { token } = theme.useToken()
   const [imgUrl, setImgUrl] = useState<string | null>()
   const menuList = useSelector((state: RootState) => state.menuList.menuList)
+  console.log(menuList)
 
   const getCaptcha = async()=>{
     const res = await getCaptchaApi();
     setImgUrl(res.data.data.code)
   }
+  const dispatch = useDispatch<AppDispatch>()
+
 
   useEffect(()=>{
     getCaptcha()
   }, [])
-  useEffect(()=>{
-    
-    
-  },[menuList])
+
 
   const onFinish = async(values: LoginParams)=>{
     try{
@@ -46,6 +48,8 @@ const Login: React.FC = () => {
         localStorage.setItem('token', res.data.data?.token!)
         navigate('/')
         message.success('登录成功')
+        dispatch(getInfo())
+        dispatch(getMenuList()) 
       }else{
         message.error(res.data.msg)
       }
