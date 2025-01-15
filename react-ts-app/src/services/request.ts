@@ -33,8 +33,6 @@ const request = axios.create({
           window.location.href = '/user/login'
         }
       }
-     
-      
       return Promise.reject(error);
     }
   );

@@ -1,5 +1,11 @@
 import request from './request'
-import { CaptchaType, LoginParams, LoginType } from './type'
+import { 
+  CaptchaType,
+  LoginParams,
+  LoginType,
+  InfoResType,
+  menulistResType
+} from './type'
 
 
 
@@ -18,8 +24,8 @@ export const logoutApi = ()=>{
   return request.post('/user/logout')
 }
 export const getInfoApi = ()=>{
-  return request.get('/user/info')
+  return request.get<InfoResType>('/user/info')
 }
 export const menulistApi = ()=>{
-  return request.get('/user/menulist')
+  return request.get<menulistResType>('/user/menulist')
 }
