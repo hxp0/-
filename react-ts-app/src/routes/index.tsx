@@ -6,8 +6,11 @@ import Create from '../pages/exam/create/Create'
 import { lazy } from 'react'
 import { Navigate } from 'react-router-dom'
 
+export const Home = lazy(()=> import('../pages/home/Home'))
 export const ClassList = lazy(()=> import('../pages/class/classList/ClassList'))
 export const Student = lazy(()=> import('../pages/class/student/Student'))
+export const Class = lazy(()=> import('../pages/class/class/Class'))
+export const ClassDetail = lazy(()=> import('../pages/class/classDetail/ClassDetail'))
 
 export const Role = lazy(()=> import('../pages/system/role/Role'))
 export const Power = lazy(()=> import('../pages/system/power/Power'))
@@ -21,14 +24,18 @@ export const AddItem = lazy(()=> import('../pages/questions/addItem/AddItem'))
 export const PaperBank = lazy(()=> import('../pages/testPaper/paperBank/PaperBank'))
 export const AddPaper = lazy(()=> import('../pages/testPaper/addPaper/AddPaper'))
 
+
 const routes =  [
-  { path: '/', element: <Navigate to="/exam" /> },
+  { path: '/', element: <Navigate to="/home" /> },
+  { path: '/home', element: <Home />, home: true },
   { path: '/exam', element: <Navigate to="/exam/record" /> },
   { path: '/exam/record', element: <Record />, home: true },
   { path: '/exam/create', element: <Create />, home: true  },
   { path: '/manage-group', element: <Navigate to="/manage-group/group-list" /> },
   { path: '/manage-group/group-list', element: <ClassList />, home: true  },
   { path: '/manage-group/group-students', element: <Student />, home: true  },
+  { path: '/manage-group/group-class', element: <Class />, home: true  },
+  { path: '/group-detail/:id', element: <ClassDetail />, home: true  },
   { path: '/userManage', element: <Navigate to="/userManage/system" /> },
   { path: '/userManage/system', element: <Role />, home: true  },
   { path: '/userManage/menuManage', element: <Power />, home: true  },

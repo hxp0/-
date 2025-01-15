@@ -1,18 +1,31 @@
-import axios from 'axios'
-import { CaptchaType, LoginParams, LoginType } from './type'
+import request from './request'
+import { 
+  CaptchaType,
+  LoginParams,
+  LoginType,
+  InfoResType,
+  menulistResType
+} from './type'
 
-axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? '/api' : 'https://zyxcl.xyz/exam_api'
 
-// 获取验证码
+
 export const getCaptchaApi = async()=>{
-  const res = await axios.get<CaptchaType>('/login/captcha')
+  const res = await request.get<CaptchaType>('/login/captcha')
   return res
 }
 
 // 登录接口
 export const getLoginApi = async( params:LoginParams )=>{
-  const res = await axios.post<LoginType>('/login', params)
+  const res = await request.post<LoginType>('/login', params)
   return res
 }
-
-// 考试记录接口
+// 退出登录
+export const logoutApi = ()=>{
+  return request.post('/user/logout')
+}
+export const getInfoApi = ()=>{
+  return request.get<InfoResType>('/user/info')
+}
+export const menulistApi = ()=>{
+  return request.get<menulistResType>('/user/menulist')
+}

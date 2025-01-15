@@ -1,4 +1,4 @@
-  import {
+import {
   LogoutOutlined,
 } from '@ant-design/icons';
 import {
@@ -10,16 +10,58 @@ import {
 import {
   ConfigProvider,
   Dropdown,
+  message
 } from 'antd';
-import React, { useState } from 'react';
+import React, {  useMemo } from 'react';
 import defaultProps from './_defaultProps';
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux';
+import type { RootState } from '../store';
+import {
+  CrownFilled,
+  HomeOutlined
+} from '@ant-design/icons'
+
+import { logoutApi } from '../services';
+import path from 'path';
 
 
 const Layout: React.FC<{ children: React.ReactNode }> = (props) => {
   const location = useLocation()
   const navigate = useNavigate()
-
+  const menuList = useSelector((state: RootState) => state.menuList.menuList)
+  const info = useSelector((state: RootState) => state.info.info)
+  console.log(info)
+  const list = useMemo(()=>{
+    const arr:any = {
+      route:{
+        path: '/',
+        routes:[]
+      }
+    }
+    if(menuList.length !==0){
+      menuList.forEach((item:any)=>{
+        arr.route.routes.push({
+          path: item.path,
+          name: item.name,
+          icon: <CrownFilled />,
+          routes:item.children.map((v:any)=>{
+            return {
+              path: v.path,
+              name: v.name,
+              icon: <CrownFilled />
+            }
+          })
+        })
+    })
+  }
+  arr.route.routes.unshift({
+    path:'home',
+    name:'首页',
+    icon: <HomeOutlined />
+  })
+    return arr
+  },[menuList])
 
   if (typeof document === 'undefined') {
     return <div />;
@@ -59,7 +101,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = (props) => {
                 width: '331px',
               },
             ]}
-            {...defaultProps}
+            {...list}
             location={{
               pathname: location.pathname,
             }}
@@ -73,9 +115,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = (props) => {
               collapsedShowGroupTitle: true,
             }}
             avatarProps={{
-              src: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
+              src: info.avator ?? 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
               size: 'small',
-              title: 'root',
+              title: info.username,
               render: (props, dom) => {
                 return (
                   <Dropdown
@@ -84,20 +126,29 @@ const Layout: React.FC<{ children: React.ReactNode }> = (props) => {
                         {
                           key: 'userinfo',
                           icon: <LogoutOutlined />,
-                          label: '个人中心',
+                          label: '用户信息'
                         },
                         {
                           key: 'logout',
                           icon: <LogoutOutlined />,
                           label: '退出登录',
-                        },
-                      ],
+                          onClick:()=>{
+                            logoutApi()
+                            .then(()=>{
+                                message.success('退出登录成功')
+                                navigate('/user/login')
+                                localStorage.removeItem('token')
+                            })
+                          }
+                        }
+                          
+                      ]
                     }}
                   >
                     {dom}
                   </Dropdown>
                 );
-              },
+              }
             }}
             headerTitleRender={(logo, title, _) => {
               const defaultDom = (
@@ -128,6 +179,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = (props) => {
             fixSiderbar={true}
             layout="mix"
             splitMenus={true}
+            
           >
             <PageContainer
               token={{

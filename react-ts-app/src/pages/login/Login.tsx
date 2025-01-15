@@ -13,22 +13,28 @@ import { message, theme } from 'antd'
 import { getCaptchaApi, getLoginApi } from '../../services'
 import type { LoginParams } from '../../services/type'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from'react-redux'
+import type { RootState } from '../../store'
 
 
 const Login: React.FC = () => {
   const navigate = useNavigate()
   const { token } = theme.useToken()
   const [imgUrl, setImgUrl] = useState<string | null>()
+  const menuList = useSelector((state: RootState) => state.menuList.menuList)
 
   const getCaptcha = async()=>{
     const res = await getCaptchaApi();
-    // console.log(res.data.data.code)
     setImgUrl(res.data.data.code)
   }
 
   useEffect(()=>{
     getCaptcha()
   }, [])
+  useEffect(()=>{
+    
+    
+  },[menuList])
 
   const onFinish = async(values: LoginParams)=>{
     try{
@@ -40,6 +46,8 @@ const Login: React.FC = () => {
         localStorage.setItem('token', res.data.data?.token!)
         navigate('/')
         message.success('登录成功')
+      }else{
+        message.error(res.data.msg)
       }
     }catch(e){
       console.log(e)
