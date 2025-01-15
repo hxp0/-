@@ -9,9 +9,10 @@ import { getMenuList } from './store/models/menulist'
 const App: React.FC = () => {
   const routes = useRoutes(roureConfig)
   const dispatch = useDispatch<AppDispatch>()
+
   useEffect(()=>{
       dispatch(getInfo())
-      dispatch(getMenuList())    
+      dispatch(getMenuList()) 
   },[location.pathname])
  
   return (

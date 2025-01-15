@@ -19,6 +19,7 @@ const infoSlice = createSlice({
     builder
       .addCase(getInfo.fulfilled, (state, action) => {
         state.info = action.payload.data!
+        localStorage.setItem('permission', JSON.stringify(state.info.permission))
       })
   }
 })

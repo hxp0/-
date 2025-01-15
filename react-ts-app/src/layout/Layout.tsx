@@ -21,8 +21,7 @@ import {
   HomeOutlined
 } from '@ant-design/icons'
 
-import { logoutApi } from '../services';
-import path from 'path';
+import { logoutApi } from '../services'
 
 
 const Layout: React.FC<{ children: React.ReactNode }> = (props) => {
@@ -137,6 +136,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = (props) => {
                                 message.success('退出登录成功')
                                 navigate('/user/login')
                                 localStorage.removeItem('token')
+                                localStorage.removeItem('permission')
                             })
                           }
                         }
