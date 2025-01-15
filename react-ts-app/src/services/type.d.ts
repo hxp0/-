@@ -110,12 +110,8 @@ export type RecordListType = {
 }
 // 考试记录列表返回值类型
 export type RecordResType = {
-  code: number
-  msg: string
-  data: {
-    list: RecordListType[]
-    total: number
-  }
+  list: RecordListType[]
+  total: number
 }
 
 
