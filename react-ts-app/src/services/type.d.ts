@@ -58,3 +58,41 @@ export type menulistDataType = {
     name: string
     _id:string
 }
+
+// 考试记录列表参数类型
+export type RecordParams = {
+  page: number
+  pagesize: number
+}
+export type Questions = {
+  _id: string
+  answer: string
+  classify: string
+  question: string
+  options: string[]
+  score: number
+}
+export type RecordListType = {
+  _id: string
+  classify: string
+  createTime: number
+  endTime: number
+  creator: string
+  examId: string
+  examiner: string[]
+  name: string
+  group: string[]
+  startTime: number
+  questionsList: Questions[]
+}
+// 考试记录列表返回值类型
+export type RecordResType = {
+  code: number
+  msg: string
+  data: {
+    list: RecordListType[]
+    total: number
+  }
+}
+
+

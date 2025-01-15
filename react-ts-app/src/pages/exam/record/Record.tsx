@@ -1,103 +1,37 @@
-import React, { useState } from 'react';
-import style from './Record.module.scss'
+import React, {useRef} from 'react'
+import { getRecordApi } from '../../../services';
+import type { RecordListType } from '../../../services/type';
 
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { ProTable, TableDropdown } from '@ant-design/pro-components';
-import { Button, Dropdown, Space, Tag } from 'antd';
-import { useRef } from 'react';
-
-type GithubIssueItem = {
-  url: string;
-  id: number;
-  number: number;
-  title: string;
-  labels: {
-    name: string;
-    color: string;
-  }[];
-  state: string;
-  comments: number;
-  created_at: string;
-  updated_at: string;
-  closed_at?: string;
-};
-
-const columns: ProColumns<GithubIssueItem>[] = [
+import { ProTable } from '@ant-design/pro-components';
+import { Button, Space, } from 'antd';
+const columns: ProColumns<RecordListType>[] = [
   {
-    dataIndex: 'index',
-    valueType: 'indexBorder',
-    width: 48,
+    title: '考试名称',
+    dataIndex: 'name',
+    ellipsis: true,
+    width: 80,
   },
   {
-    title: '标题',
-    dataIndex: 'title',
-    copyable: true,
-    ellipsis: true,
-    tooltip: '标题过长会自动收缩',
-    formItemProps: {
-      rules: [
-        {
-          required: true,
-          message: '此项为必填项',
-        },
-      ],
-    },
-  },
-  {
-    disable: true,
-    title: '状态',
-    dataIndex: 'state',
-    filters: true,
-    onFilter: true,
-    ellipsis: true,
+    title: '科目分类',
+    dataIndex: 'classify',
+    search:true,
     valueType: 'select',
-    valueEnum: {
-      all: { text: '超长'.repeat(50) },
-      open: {
-        text: '未解决',
-        status: 'Error',
-      },
-      closed: {
-        text: '已解决',
-        status: 'Success',
-        disabled: true,
-      },
-      processing: {
-        text: '解决中',
-        status: 'Processing',
-      },
-    },
+    filters:true,
+    onFilter:true,
+    ellipsis: true,
+    width: 80,
   },
   {
-    disable: true,
-    title: '标签',
-    dataIndex: 'labels',
-    search: false,
-    renderFormItem: (_, { defaultRender }) => {
-      return defaultRender(_);
-    },
-    render: (_, record) => (
-      <Space>
-        {record.labels.map(({ name, color }) => (
-          <Tag color={color} key={name}>
-            {name}
-          </Tag>
-        ))}
-      </Space>
-    ),
+    title: '创建者',
+    dataIndex: 'creator',
+    ellipsis: true,
+    width: 80,
   },
   {
     title: '创建时间',
-    key: 'showTime',
-    dataIndex: 'created_at',
-    valueType: 'date',
-    sorter: true,
-    hideInSearch: true,
-  },
-  {
-    title: '创建时间',
-    dataIndex: 'created_at',
-    valueType: 'dateRange',
+    dataIndex: 'createTimeSearch',
+    valueType: 'dateTimeRange',
     hideInTable: true,
     search: {
       transform: (value) => {
@@ -109,57 +43,122 @@ const columns: ProColumns<GithubIssueItem>[] = [
     },
   },
   {
+    title: '创建时间',
+    dataIndex: 'createTime',
+    ellipsis: true,
+    valueType: 'dateTime',
+    hideInSearch: true,
+    width: 160,
+  },		
+  {
+    title: '状态',
+    dataIndex: 'status',
+    valueType: 'select',
+    valueEnum: {
+      0: {
+        text: '未开始',
+        status: 'Success',
+      },
+      1: {
+        text: '已结束',
+        status: 'Error',
+      },
+      2: {
+        text: '进行中',
+        status: 'Processing',
+      },
+    },
+  },
+  {
+    title: '监考人',
+    dataIndex: 'examiner',
+    ellipsis: true
+  },
+  {
+    title: '考试班级',
+    dataIndex: 'group',
+    ellipsis: true,
+    valueType: 'select',
+  },		
+  {
+    title: '开始时间',
+    // key: 'startTime',
+    dataIndex: 'startTime',
+    valueType: 'dateTime',
+    hideInSearch: true,
+  },
+  {
+    title: '结束时间',
+    // key: 'endTime',
+    dataIndex: 'endTime',
+    valueType: 'dateTime',
+    hideInSearch: true,
+  },
+  
+  {
+    title: '考试时间',
+    dataIndex: 'examTime',
+    valueType: 'dateTimeRange',
+    hideInTable: true,
+    search: {
+      transform: (value) => {
+        return {
+          startTime: value[0],
+          endTime: value[1],
+        };
+      },
+    },
+  },
+  {
+    title: '设置',
+    valueType: 'option',
+    key: 'setting',
+    width: 160,
+    render: () => [
+      <Space>
+        <Button type="primary" size="small">
+          预览试卷
+        </Button>
+        <Button type="default" size="small" disabled>
+          删除
+        </Button>
+      </Space>
+
+    ],
+  },
+  {
     title: '操作',
     valueType: 'option',
     key: 'option',
-    render: (text, record, _, action) => [
-      <a
-        key="editable"
-        onClick={() => {
-          action?.startEditable?.(record.id);
-        }}
-      >
-        编辑
-      </a>,
-      <a href={record.url} target="_blank" rel="noopener noreferrer" key="view">
-        查看
-      </a>,
-      <TableDropdown
-        key="actionGroup"
-        onSelect={() => action?.reload()}
-        menus={[
-          { key: 'copy', name: '复制' },
-          { key: 'delete', name: '删除' },
-        ]}
-      />,
+    fixed: 'right',
+    width: 80,
+    render: () => [
+      <Button type="primary" size="small">
+        成绩分析
+      </Button>
     ],
   },
 ];
 
-const record: React.FC = () => {
+const record:React.FC = () => {
   const actionRef = useRef<ActionType>();
   return (
-    <ProTable<GithubIssueItem>
+    <ProTable<RecordListType>
       columns={columns}
       actionRef={actionRef}
       cardBordered
-      request={async (params, sort, filter) => {
-        return {}
+      request={async (params) => {
+        const res = await getRecordApi({ 
+          page:params.current!,
+          pagesize:params.pageSize! 
+        })
+        return {
+          data: res.data.data.list,
+          total: res.data.data.total,
+          success: true,
+        }
       }}
-      editable={{
-        type: 'multiple',
-      }}
-      columnsState={{
-        persistenceKey: 'pro-table-singe-demos',
-        persistenceType: 'localStorage',
-        defaultValue: {
-          option: { fixed: 'right', disable: true },
-        },
-        onChange(value) {
-          console.log('value: ', value);
-        },
-      }}
-      rowKey="id"
+      rowKey="_id"
       search={{
         labelWidth: 'auto',
       }}
@@ -168,24 +167,16 @@ const record: React.FC = () => {
           listsHeight: 400,
         },
       }}
-      form={{
-        // 由于配置了 transform，提交的参数与定义的不同这里需要转化一下
-        syncToUrl: (values, type) => {
-          if (type === 'get') {
-            return {
-              ...values,
-              created_at: [values.startTime, values.endTime],
-            };
-          }
-          return values;
-        },
-      }}
       pagination={{
-        pageSize: 5,
-        onChange: (page) => console.log(page),
+        defaultPageSize: 5,
+        showSizeChanger: true,
+        pageSizeOptions: ['5', '10', '20', '50'],
+        showQuickJumper: true,
+        // onChange: (page) => console.log(page),
       }}
       dateFormatter="string"
       headerTitle="考试记录"
+      scroll={{ x: 1300 }}
     />
   );
 };

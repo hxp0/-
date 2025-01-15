@@ -4,7 +4,9 @@ import {
   LoginParams,
   LoginType,
   InfoResType,
-  menulistResType
+  menulistResType, 
+  RecordParams,
+  RecordResType 
 } from './type'
 
 
@@ -28,4 +30,12 @@ export const getInfoApi = ()=>{
 }
 export const menulistApi = ()=>{
   return request.get<menulistResType>('/user/menulist')
+}
+
+// 考试记录接口
+export const getRecordApi = (params:RecordParams)=>{
+  const res =  request.get<RecordResType>('/examination/list',
+    {params}
+   )
+  return res
 }
