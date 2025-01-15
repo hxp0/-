@@ -1,11 +1,13 @@
-import React from 'react'
-import style from './NotFound.module.scss'
+import React from 'react';
+import { Button, Result } from 'antd';
+import { Link } from 'react-router-dom';
+const App: React.FC = () => (
+  <Result
+    status="404"
+    title="404"
+    subTitle="访问的页面不存在"
+    extra={<Link to="/"><Button type="primary">返回首页</Button></Link>}
+  />
+);
 
-const NotFound: React.FC = () => {
-  return (
-    <div className={style.notFound}>
-      NotFound
-    </div>
-  );
-};
-export default NotFound;
+export default App;

@@ -14,3 +14,5 @@ export const getLoginApi = async( params:LoginParams )=>{
   const res = await axios.post<LoginType>('/login', params)
   return res
 }
+
+// 考试记录接口
