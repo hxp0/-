@@ -1,16 +1,23 @@
 import request from './request'
-import { CaptchaType, LoginParams, LoginType } from './type'
+import {
+  BaseType,
+  CaptchaType,
+  LoginParams,
+  LoginType,
+  QuestionType,
+  QuestionListParams
+} from './type'
 
 
 
 export const getCaptchaApi = async()=>{
-  const res = await request.get<CaptchaType>('/login/captcha')
+  const res = await request.get<BaseType<CaptchaType>>('/login/captcha')
   return res
 }
 
 // 登录接口
 export const getLoginApi = async( params:LoginParams )=>{
-  const res = await request.post<LoginType>('/login', params)
+  const res = await request.post<BaseType<LoginType>>('/login', params)
   return res
 }
 // 退出登录
@@ -22,4 +29,11 @@ export const getInfoApi = ()=>{
 }
 export const menulistApi = ()=>{
   return request.get('/user/menulist')
+}
+
+// 试题库接口
+export const getQuestionApi = ( params: QuestionListParams )=>{
+  return request.get<BaseType<QuestionType>>('/question/list', {
+    params
+  })
 }
