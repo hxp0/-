@@ -6,6 +6,7 @@ import {
   LoginType,
   QuestionType,
   QuestionListParams,
+  QuestionTypeList,
   InfoResType
 } from './type'
 
@@ -33,8 +34,13 @@ export const menulistApi = ()=>{
 }
 
 // 试题库接口
-export const getQuestionApi = ( params: QuestionListParams )=>{
+export const getQuestionApi = ( params: QuestionListParams | null = null )=>{
   return request.get<BaseType<QuestionType>>('/question/list', {
     params
   })
+}
+
+// 获取试题类型接口
+export const getQuestionTypeApi = () => {
+  return request.get<BaseType<QuestionTypeList>>('/question/type/list')
 }

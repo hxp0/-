@@ -75,9 +75,21 @@ export type QuestionListItem = {
   _id: string
   createdAt?: string
 }
-
+// 试题库查询参数
 export type QuestionListParams = {
   page: number
   pagesize: number
   question?: string
+  classify?: string
+  type?: string
+}
+
+// 查询试题类型返回值类型
+export type QuestionTypeList = {
+  list: QuestionTypeListItem[]
+}
+export type QuestionTypeListItem = {
+  _id: string
+  name: string
+  value: number
 }
