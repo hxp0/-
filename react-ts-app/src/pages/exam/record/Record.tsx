@@ -17,8 +17,6 @@ const columns: ProColumns<RecordListType>[] = [
     dataIndex: 'classify',
     search:true,
     valueType: 'select',
-    filters:true,
-    onFilter:true,
     ellipsis: true,
     width: 80,
   },
@@ -55,17 +53,14 @@ const columns: ProColumns<RecordListType>[] = [
     dataIndex: 'status',
     valueType: 'select',
     valueEnum: {
-      0: {
-        text: '未开始',
-        status: 'Success',
+      '0': {
+        text: '未开始'
       },
-      1: {
+      '1': {
         text: '已结束',
-        status: 'Error',
       },
-      2: {
+      '2': {
         text: '进行中',
-        status: 'Processing',
       },
     },
   },
@@ -94,7 +89,6 @@ const columns: ProColumns<RecordListType>[] = [
     valueType: 'dateTime',
     hideInSearch: true,
   },
-  
   {
     title: '考试时间',
     dataIndex: 'examTime',
@@ -111,12 +105,14 @@ const columns: ProColumns<RecordListType>[] = [
   },
   {
     title: '设置',
-    valueType: 'option',
-    key: 'setting',
+    valueType: "option",
+    dataIndex: 'setting',
+    hideInSearch: true,
     width: 160,
     render: () => [
       <Space>
         <Button type="primary" size="small">
+          {/*  onClick={showDrawer} */}
           预览试卷
         </Button>
         <Button type="default" size="small" disabled>
@@ -129,8 +125,9 @@ const columns: ProColumns<RecordListType>[] = [
   {
     title: '操作',
     valueType: 'option',
-    key: 'option',
+    dataIndex: 'operate',
     fixed: 'right',
+    hideInSearch: true,
     width: 80,
     render: () => [
       <Button type="primary" size="small">
@@ -142,23 +139,30 @@ const columns: ProColumns<RecordListType>[] = [
 
 const record:React.FC = () => {
   const actionRef = useRef<ActionType>();
+  // const [open, setOpen] = useState(false);
+  // const showDrawer = () => {
+  //   setOpen (true)
+  // }
   return (
     <ProTable<RecordListType>
       columns={columns}
       actionRef={actionRef}
       cardBordered
-      request={async (params) => {
+      request={async (params,sorter,filter) => {
+        console.log(params,sorter,filter)
+        const { current , pageSize,...others } = params
         const res = await getRecordApi({ 
-          page:params.current!,
-          pagesize:params.pageSize! 
+          page:current!,
+          pagesize:pageSize!,
+          ...others 
         })
+        console.log(res.data.data.list)
         return {
           data: res.data.data.list,
           total: res.data.data.total,
           success: true,
         }
       }}
-      rowKey="_id"
       search={{
         labelWidth: 'auto',
       }}
@@ -167,6 +171,7 @@ const record:React.FC = () => {
           listsHeight: 400,
         },
       }}
+      rowKey="_id"
       pagination={{
         defaultPageSize: 5,
         showSizeChanger: true,

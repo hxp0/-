@@ -12,8 +12,8 @@ const Permission: React.FC<Props> = ( props ) => {
   const permission = useSelector((state: RootState) => state.info.info.permission ) || JSON.parse(localStorage.getItem('permission')!)
   const index = permission.findIndex(item => item.path === location.pathname )
 
-  console.log(location.pathname)
-  console.log(index)
+  // console.log(location.pathname)
+  // console.log(index)
 
   if( index === -1 ){
     return <Navigate to='/403' />

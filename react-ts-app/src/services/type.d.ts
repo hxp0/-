@@ -87,7 +87,7 @@ export type RecordParams = {
   page: number
   pagesize: number
 }
-export type Questions = {
+export type RecordQuestion = {
   _id: string
   answer: string
   classify: string
@@ -101,12 +101,11 @@ export type RecordListType = {
   createTime: number
   endTime: number
   creator: string
-  examId: string
   examiner: string[]
   name: string
   group: string[]
   startTime: number
-  questionsList: Questions[]
+  questionsList: RecordQuestion[]
 }
 // 考试记录列表返回值类型
 export type RecordResType = {
