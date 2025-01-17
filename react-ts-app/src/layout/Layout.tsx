@@ -12,18 +12,16 @@ import {
   Dropdown,
   message
 } from 'antd';
-import React, {  useMemo } from 'react';
-import defaultProps from './_defaultProps';
+import React, {  useMemo } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { useSelector } from 'react-redux';
-import type { RootState } from '../store';
+import { useSelector } from 'react-redux'
+import type { RootState } from '../store'
 import {
   CrownFilled,
   HomeOutlined
 } from '@ant-design/icons'
 
-import { logoutApi } from '../services';
-import path from 'path';
+import { logoutApi } from '../services'
 
 
 const Layout: React.FC<{ children: React.ReactNode }> = (props) => {
@@ -31,7 +29,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = (props) => {
   const navigate = useNavigate()
   const menuList = useSelector((state: RootState) => state.menuList.menuList)
   const info = useSelector((state: RootState) => state.info.info)
-  console.log(info)
   const list = useMemo(()=>{
     const arr:any = {
       route:{

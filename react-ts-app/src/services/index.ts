@@ -23,9 +23,30 @@ export const getLoginApi = async( params:LoginParams )=>{
 export const logoutApi = ()=>{
   return request.post('/user/logout')
 }
+// 获取用户信息
 export const getInfoApi = ()=>{
   return request.get<InfoResType>('/user/info')
 }
+// 获取权限列表
 export const menulistApi = ()=>{
   return request.get<menulistResType>('/user/menulist')
 }
+// 获取试卷列表
+export const examApi = (params={})=>{
+  return request.get('/exam/list',{params})
+}
+// 删除试卷
+export const DeleteExamApi = (id:string)=>{
+  return request.post(`/exam/remove`,{id})
+}
+// 获取试卷详情
+export const detailExamApi = (id:string)=>{
+  return request.get(`/exam/detail?id=${id}`)
+}
+
+// 获取试题类型列表
+export const questionTypeApi = ()=>{
+  return request.get(`/question/type/list`)
+}
+
+
