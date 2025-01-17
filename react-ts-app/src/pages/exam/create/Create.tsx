@@ -1,6 +1,7 @@
 import React from 'react'
 import style from './Create.module.scss'
 
+
 const Create: React.FC = () => {
   return (
     <div className={style.create}>
@@ -9,3 +10,5 @@ const Create: React.FC = () => {
   );
 };
 export default Create;
+
+

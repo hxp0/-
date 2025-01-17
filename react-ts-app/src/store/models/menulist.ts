@@ -19,6 +19,7 @@ const menuListSlice = createSlice({
   extraReducers:builder => {
     builder
       .addCase(getMenuList.fulfilled, (state, action) => {
+        // console.log(action.payload)
         state.menuList = action.payload.data!.list
       })
   }
