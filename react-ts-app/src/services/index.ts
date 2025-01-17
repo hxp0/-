@@ -7,7 +7,8 @@ import {
   QuestionType,
   QuestionListParams,
   QuestionTypeList,
-  InfoResType
+  InfoResType,
+  UpdateQuestionParams
 } from './type'
 
 
@@ -43,4 +44,14 @@ export const getQuestionApi = ( params: QuestionListParams | null = null )=>{
 // 获取试题类型接口
 export const getQuestionTypeApi = () => {
   return request.get<BaseType<QuestionTypeList>>('/question/type/list')
+}
+
+// 编辑题目
+export const updateQuestionApi = ( params: UpdateQuestionParams ) => {
+  return request.post<BaseType<QuestionTypeList>>('/question/update', params)
+}
+
+// 删除题目
+export const delQuestionApi = ( params:{ id: string } ) => {
+  return request.post<BaseType<QuestionTypeList>>('/question/remove', params)
 }

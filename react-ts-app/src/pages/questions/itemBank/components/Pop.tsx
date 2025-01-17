@@ -7,32 +7,41 @@ import {
   ProFormRadio,
 } from '@ant-design/pro-components'
 import type { ProFormInstance } from '@ant-design/pro-components'
+import { updateQuestionApi } from '../../../../services'
 import type { QuestionListItem } from '../../../../services/type'
 import { message, Input } from 'antd'
 
-
 interface Props {
   visible: boolean
+  types: any
+  // Map<string, { text: string; }>
+  classify: any
+  // {}
   setvisible: ( value: boolean ) => void
   editRow: QuestionListItem
+  reload: ()=>void
 }
 
-const Pop: React.FC<Props> = ({ visible, setvisible, editRow }) => {
+const Pop: React.FC<Props> = ({ visible, types, classify, setvisible, editRow, reload }) => {
   const formRef = useRef<ProFormInstance>()
+  // const arr = ['A','B','C','D','E','F','H']
 
   useEffect(()=>{
     formRef.current?.setFieldsValue(editRow)
-  }, [formRef.current])
+  }, [editRow])
 
   return (
     <>
       <ModalForm
         formRef={formRef}
         width={520}
-        title="新建表单"
+        title="编辑试题"
         open={visible}
-        onFinish={async () => {
-          message.success('提交成功')
+        onFinish={async (values) => {
+          const res = await updateQuestionApi({id: editRow._id,...values})
+          console.log(res.data.code)
+          reload()
+          message.success('编辑成功')
           return true
         }}
         onOpenChange={setvisible}
@@ -43,6 +52,7 @@ const Pop: React.FC<Props> = ({ visible, setvisible, editRow }) => {
             name="type"
             label="题型"
             placeholder="选择题型"
+            valueEnum={types}
             rules={[{ required: true, message: '请选择题型!' }]}
           />
           <ProFormSelect
@@ -50,6 +60,7 @@ const Pop: React.FC<Props> = ({ visible, setvisible, editRow }) => {
             name="classify"
             label="科目"
             placeholder="选择科目"
+            valueEnum={classify}
             rules={[{ required: true, message: '请选择科目！' }]}
           />
         </ProForm.Group>
@@ -63,26 +74,33 @@ const Pop: React.FC<Props> = ({ visible, setvisible, editRow }) => {
         <ProFormRadio.Group
           name="options"
           label="选项"
-          options={[
-            {
-              label: <div>A<Input /></div>,
-              value: 'a',
-            },
-            {
-              label: <div>B<Input /></div>,
-              value: 'b',
-            },
-            {
-              label: <div>C<Input /></div>,
-              value: 'c',
-            },
-            {
-              label: <div>D<Input /></div>,
-              value: 'd',
-            },
-          ]}
+          // fieldProps={
+          //   defaultValue: {editRow.answer}
+          //  onChange: (e: T) => void
+          // }
+          options={
+            [
+              {
+                label: <div>A<Input value={editRow?.options[0]}/></div>,
+                value: 'A',
+              },
+              {
+                label: <div>B<Input value={editRow?.options[1]}/></div>,
+                value: 'B',
+              },
+              {
+                label: <div>C<Input value={editRow?.options[2]}/></div>,
+                value: 'C',
+              },
+              {
+                label: <div>D<Input value={editRow?.options[3]}/></div>,
+                value: 'D',
+              },
+            ]
+          }
           rules={[{ required: true, message: '请选择答案！' }]}
         />
+        {/* {JSON.stringify(editRow)} */}
         { editRow?.hasOwnProperty('desc') && 
           <ProFormTextArea
             width={465}
