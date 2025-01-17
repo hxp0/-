@@ -7,11 +7,12 @@ import {
   LoginType,
   QuestionType,
   QuestionListParams,
+  QuestionTypeList,
   InfoResType,
+  UpdateQuestionParams,
   RecordParams,
   RecordResType
 } from './type'
-
 
 
 export const getCaptchaApi = async()=>{
@@ -34,17 +35,33 @@ export const getInfoApi = ()=>{
 export const menulistApi = ()=>{
   return request.get('/user/menulist')
 }
+
+// 试题库接口
+export const getQuestionApi = ( params: QuestionListParams | null = null )=>{
+  return request.get<BaseType<QuestionType>>('/question/list', {
+    params
+  })
+}
+// 获取试题类型接口
+export const getQuestionTypeApi = () => {
+  return request.get<BaseType<QuestionTypeList>>('/question/type/list')
+}
+
+// 编辑题目
+export const updateQuestionApi = ( params: UpdateQuestionParams ) => {
+  return request.post<BaseType<QuestionTypeList>>('/question/update', params)
+}
+
+// 删除题目
+export const delQuestionApi = ( params:{ id: string } ) => {
+  return request.post<BaseType<QuestionTypeList>>('/question/remove', params)
+}
+
+
 // 考试记录接口
 export const getRecordApi = (params:RecordParams)=>{
   const res =  request.get<BaseType<RecordResType>>('/examination/list',
     {params}
    )
   return res
-}
-
-// 试题库接口
-export const getQuestionApi = ( params: QuestionListParams )=>{
-  return request.get<BaseType<QuestionType>>('/question/list', {
-    params
-  })
 }
