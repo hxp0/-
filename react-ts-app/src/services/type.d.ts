@@ -64,7 +64,6 @@ export type QuestionType =  {
   total: number
   totalPage: number
 } 
-
 export type QuestionListItem = {
   answer: string
   classify: string
@@ -76,11 +75,26 @@ export type QuestionListItem = {
   createdAt?: string
 }
 
+// 试题库查询参数
 export type QuestionListParams = {
   page: number
   pagesize: number
   question?: string
+  classify?: string
+  type?: string
 }
+// 查询试题类型返回值类型
+export type QuestionTypeList = {
+  list: QuestionTypeListItem[]
+}
+export type QuestionTypeListItem = {
+  _id: string
+  name: string
+  value: number
+}
+// 编辑试题参数类型
+export type UpdateQuestionParams = Partial<Omit<QuestionListItem, '_v'> & { id: string }>
+
 
 
 // 考试记录列表公共 参数类型
@@ -164,5 +178,4 @@ export type UserListResType = {
   list: UserListType[]
   total: number
 }
-
 
