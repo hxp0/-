@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import style from './ItemBank.module.scss'
-import { getQuestionApi, getQuestionTypeApi, delQuestionApi  } from '../../../services'
+import { getQuestionApi, delQuestionApi  } from '../../../services'
 import { ProTable } from '@ant-design/pro-components'
 import type { ProColumns, ActionType } from '@ant-design/pro-components'
 import { Button, message } from 'antd'
@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { ConstantFn } from './constant'
 import Pop from './components/Pop'
 import DrawerCom from './components/DrawerCom'
+import { getData } from './components/Select'
 
 const ItemBank: React.FC = () => {
   const navigate = useNavigate()
@@ -21,36 +22,15 @@ const ItemBank: React.FC = () => {
   const drawerRef = useRef<any>(null)
 
 
-  const getData = async()=>{
-    const classifyArr:string[] = []
-    const typeArr:{ label:{text: string}, value: string}[] = []
-    const res = await Promise.all([getQuestionApi(), getQuestionTypeApi()])
-    // console.log(res)
-    // 科目 eg:数学
-    res[0].data.data.list.map((item) =>{
-      const index = classifyArr.findIndex(it => it === item.classify)
-      if( index === -1 ){
-        classifyArr.push(item.classify)
-      }
-    })
-    const obj = classifyArr.reduce((obj:any, current: string) => {
-      obj[current] = current;
-      return obj;
-    }, {})
-    setClassify(obj)
-    // 题目类型 eg:单选
-    res[1].data.data.list.map(item=>{
-      typeArr.push({
-        label:{text: item.name},
-        value: item.value + ''
-      })
-    })
-    const types = new Map( typeArr.map(item => [item.value, item.label]))
+  const getList = async()=>{
+    const res = await getData()
+    setClassify(res.classify)
+    const types = new Map( res.types.map(item => [item.value, item.label]))
     setTypes(types)
   }
   
   useEffect(()=>{
-    getData()
+    getList()
   }, [])
 
   const delFn = ( row: QuestionListItem ) =>{

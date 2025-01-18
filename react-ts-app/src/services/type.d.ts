@@ -60,8 +60,9 @@ export type QuestionType =  {
 export type QuestionListItem = {
   answer: string
   classify: string
-  options: string[]
+  options?: string[]
   question: string
+  desc?: string
   type: string
   __v: number
   _id: string
@@ -87,7 +88,8 @@ export type QuestionTypeListItem = {
 }
 // 编辑试题参数类型
 export type UpdateQuestionParams = Partial<Omit<QuestionListItem, '_v'> & { id: string }>
-
+// 添加试题接口参数类型
+export type CreateQuestionParams = Omit<QuestionListItem, '_v'>
 
 
 // 考试记录列表公共 参数类型
@@ -100,7 +102,7 @@ export type RecordParams = {
 // 考试记录列表里试题类型
 export type RecordQuestion = {
   _id: string
-  answer: string
+  answer: string | string[]
   classify: string
   question: string
   options: string[]
