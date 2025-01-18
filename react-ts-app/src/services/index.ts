@@ -1,57 +1,3 @@
-<<<<<<< HEAD
-import request from './request'
-import { 
-  CaptchaType,
-  LoginParams,
-  LoginType,
-  InfoResType,
-  menulistResType
-} from './type'
-
-
-
-export const getCaptchaApi = async()=>{
-  const res = await request.get<CaptchaType>('/login/captcha')
-  return res
-}
-
-// 登录接口
-export const getLoginApi = async( params:LoginParams )=>{
-  const res = await request.post<LoginType>('/login', params)
-  return res
-}
-// 退出登录
-export const logoutApi = ()=>{
-  return request.post('/user/logout')
-}
-// 获取用户信息
-export const getInfoApi = ()=>{
-  return request.get<InfoResType>('/user/info')
-}
-// 获取权限列表
-export const menulistApi = ()=>{
-  return request.get<menulistResType>('/user/menulist')
-}
-// 获取试卷列表
-export const examApi = (params={})=>{
-  return request.get('/exam/list',{params})
-}
-// 删除试卷
-export const DeleteExamApi = (id:string)=>{
-  return request.post(`/exam/remove`,{id})
-}
-// 获取试卷详情
-export const detailExamApi = (id:string)=>{
-  return request.get(`/exam/detail?id=${id}`)
-}
-
-// 获取试题类型列表
-export const questionTypeApi = ()=>{
-  return request.get(`/question/type/list`)
-}
-
-
-=======
 
 import request from './request'
 import {
@@ -61,9 +7,13 @@ import {
   LoginType,
   QuestionType,
   QuestionListParams,
-  InfoResType,
+  infoDataType,
   RecordParams,
-  RecordResType
+  RecordResType,
+  menulistDataType,
+  ExamListType,
+  detailExamType,
+  questionTypeRes
 } from './type'
 
 
@@ -83,10 +33,10 @@ export const logoutApi = ()=>{
   return request.post('/user/logout')
 }
 export const getInfoApi = ()=>{
-  return request.get<InfoResType>('/user/info')
+  return request.get<BaseType<infoDataType>>('/user/info')
 }
 export const menulistApi = ()=>{
-  return request.get('/user/menulist')
+  return request.get<BaseType<{list:menulistDataType[]}>>('/user/menulist')
 }
 // 考试记录接口
 export const getRecordApi = (params:RecordParams)=>{
@@ -102,4 +52,35 @@ export const getQuestionApi = ( params: QuestionListParams )=>{
     params
   })
 }
->>>>>>> 629e74bf8119f6dec6a6a19187177a4ffdd5d30b
+// 获取试卷列表
+export const examApi = (params={})=>{
+  return request.get<BaseType<ExamListType>>('/exam/list',{params})
+}
+// 删除试卷
+export const DeleteExamApi = (id:string)=>{
+  return request.post(`/exam/remove`,{id})
+}
+// 获取试卷详情
+export const detailExamApi = (id:string)=>{
+  return request.get<BaseType<detailExamType>>(`/exam/detail?id=${id}`)
+}
+
+// 获取试题类型列表
+export const questionTypeApi = ()=>{
+  return request.get<BaseType<{list:questionTypeRes[]}>>(`/question/type/list`)
+}
+// 获取考试科目列表
+export const classifyListApi = ()=>{
+  return request.get(`/classify/list`)
+}
+// 获取试题科目列表
+export const questionListApi = (classify:string)=>{
+  return request.get(`/question/list?classify=${classify}`)
+}
+// 创建试卷
+export const examCreateApi = (params)=>{
+  return request.post(`/exam/create`,params)
+}
+
+
+

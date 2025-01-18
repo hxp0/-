@@ -17,6 +17,7 @@ import { useSelector, useDispatch } from'react-redux'
 import type { RootState, AppDispatch } from '../../store'
 import { getInfo } from '../../store/models/info'
 import { getMenuList } from '../../store/models/menulist'
+import { getQuestionType } from '../../store/models/questionType'
 
 
 const Login: React.FC = () => {
@@ -24,7 +25,6 @@ const Login: React.FC = () => {
   const { token } = theme.useToken()
   const [imgUrl, setImgUrl] = useState<string | null>()
   const menuList = useSelector((state: RootState) => state.menuList.menuList)
-  console.log(menuList)
 
   const getCaptcha = async()=>{
     const res = await getCaptchaApi();
@@ -50,6 +50,7 @@ const Login: React.FC = () => {
         message.success('登录成功')
         dispatch(getInfo())
         dispatch(getMenuList()) 
+        dispatch(getQuestionType())
       }else{
         message.error(res.data.msg)
       }

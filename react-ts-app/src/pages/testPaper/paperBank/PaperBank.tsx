@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React,{useState} from 'react'
 import type { ActionType } from '@ant-design/pro-components'
 import { ProTable } from '@ant-design/pro-components'
@@ -54,16 +53,3 @@ const PaperBank:React.FC = () => {
  
 };
 export default PaperBank
-=======
-import React from 'react'
-import style from './PaperBank.module.scss'
-
-const PaperBank: React.FC = () => {
-  return (
-    <div className={style.paperBank}>
-      PaperBank
-    </div>
-  );
-};
-export default PaperBank;
->>>>>>> 629e74bf8119f6dec6a6a19187177a4ffdd5d30b

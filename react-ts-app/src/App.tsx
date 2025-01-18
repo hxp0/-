@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import type {AppDispatch} from './store'
 import { getInfo } from './store/models/info'
 import { getMenuList } from './store/models/menulist'
+import { getQuestionType } from './store/models/questionType'
  
 const App: React.FC = () => {
   const routes = useRoutes(roureConfig)
@@ -14,6 +15,7 @@ const App: React.FC = () => {
   useEffect(()=>{
       dispatch(getInfo())
       dispatch(getMenuList()) 
+      dispatch(getQuestionType())
   },[])
   return (
     <Suspense fallback={<div>Loading...</div>}>

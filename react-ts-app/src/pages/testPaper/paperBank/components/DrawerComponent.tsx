@@ -1,35 +1,13 @@
 import React, { useEffect,useMemo,useState } from 'react'
 import { Drawer,Button } from 'antd'
 import { detailExamApi,questionTypeApi } from '../../../../services'
+import type { questionItemType,detailExamType,questionTypeRes } from '../../../../services/type'
 
 type Props = {
     open:boolean
     loading:boolean
     setOpen:(val:boolean)=>void
     id:string
-}
-type questionItemType = {
-    name:string
-    _id:string
-    classify:string
-    __v:number
-    createTime:string
-    type:string
-    options:string[]
-}
-type detailExamType = {
-    name:string
-    classify:string
-    __v:number
-    createTime:string
-    creator:string
-    _id:string
-    questions:questionItemType[]
-}
-type questionTypeRes = {
-    name:string
-    value:number
-    _id:string
 }
 
 const DrawerComponent:React.FC<Props> = (props)=> {
@@ -47,7 +25,7 @@ const DrawerComponent:React.FC<Props> = (props)=> {
         setQuestionType(res.data.data.list)
     }
     const questionList = useMemo(()=>{
-        let arr:any[] = questionType.map(item=>{
+        let arr:(questionTypeRes & {list:questionItemType[]})[] = questionType.map(item=>{
             return {
                 ...item,
                 list:[]
@@ -63,7 +41,6 @@ const DrawerComponent:React.FC<Props> = (props)=> {
         })
         return arr
     },[data])
-    console.log(questionList)
     useEffect(()=>{
         getDetailExam()
         getQuestionType()
