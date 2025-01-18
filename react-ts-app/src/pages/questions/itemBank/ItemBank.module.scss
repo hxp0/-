@@ -1,3 +1,7 @@
 .btn{
   margin:15px 30px;
 }
+:global(.ant-pro-query-filter){
+  border-bottom:1px dashed #ddd;
+  margin:0 24px;
+}
