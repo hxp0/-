@@ -6,7 +6,7 @@ import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { DrawerForm, ProTable } from '@ant-design/pro-components';
 import { Button, Space, Modal, message } from 'antd';
 // import classNames from 'classnames';
-import { delRecordApi } from '../../../services';
+import { delRecordApi } from '../../../services/index';
 
 const record:React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
