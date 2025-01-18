@@ -11,7 +11,10 @@ import {
   InfoResType,
   UpdateQuestionParams,
   RecordParams,
-  RecordResType
+  RecordResType,
+  ClassResType,
+  SubjectResType,
+  UserListResType
 } from './type'
 
 
