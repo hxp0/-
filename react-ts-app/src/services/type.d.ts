@@ -96,12 +96,16 @@ export type QuestionTypeListItem = {
 export type UpdateQuestionParams = Partial<Omit<QuestionListItem, '_v'> & { id: string }>
 
 
-// 考试记录列表参数类型
+
+// 考试记录列表公共 参数类型
 export type RecordParams = {
   page: number
   pagesize: number
+  name?: string
+  creator?: string
 }
-export type Questions = {
+// 考试记录列表里试题类型
+export type RecordQuestion = {
   _id: string
   answer: string
   classify: string
@@ -109,26 +113,69 @@ export type Questions = {
   options: string[]
   score: number
 }
+// 考试记录列表参数类型
 export type RecordListType = {
   _id: string
   classify: string
   createTime: number
   endTime: number
   creator: string
-  examId: string
   examiner: string[]
   name: string
   group: string[]
   startTime: number
-  questionsList: Questions[]
+  status: number
+  questionsList: RecordQuestion[]
 }
 // 考试记录列表返回值类型
 export type RecordResType = {
-  code: number
-  msg: string
-  data: {
-    list: RecordListType[]
-    total: number
-  }
+  list: RecordListType[]
+  total: number
+}
+// 班级列表参数类型
+export type ClassListType = {
+  _id: string
+  classify: string
+  creator: string
+  name: string
+  createTime: number
+  teacher: string
+}
+// 班级列表返回值类型
+export type ClassResType = {
+  list: ClassListType[]
+  total: number
+}
+// 科目列表参数类型
+export type SubjectListType = {
+  _id: string
+  value: string
+  creator: string
+  name: string
+  createTime: number
+}
+//科目列表返回值类型
+export type SubjectResType = {
+  list: SubjectListType[]
+  total: number
+}
+// 用户列表参数类型
+export type UserListType = {
+  _id: string
+  creator?: string
+  username: string
+  avator: string
+  role: string[]
+  age?: number
+  sex?: string
+  email?: string
+  password: string
+  lastOnlineTime: number
+  status: number
+}
+// 用户列表返回值类型
+export type UserListResType = {
+  list: UserListType[]
+  total: number
 }
 
