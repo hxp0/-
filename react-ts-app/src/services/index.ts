@@ -8,10 +8,11 @@ import {
   QuestionType,
   QuestionListParams,
   QuestionTypeList,
+  CreateQuestionParams,
   InfoResType,
   UpdateQuestionParams,
   RecordParams,
-  RecordResType
+  RecordResType,
 } from './type'
 
 
@@ -55,6 +56,11 @@ export const updateQuestionApi = ( params: UpdateQuestionParams ) => {
 // 删除题目
 export const delQuestionApi = ( params:{ id: string } ) => {
   return request.post<BaseType<QuestionTypeList>>('/question/remove', params)
+}
+
+// 添加试题
+export const createQuestionApi = ( params: CreateQuestionParams ) => {
+  return request.post<BaseType<QuestionTypeList>>('/question/create', params)
 }
 
 
