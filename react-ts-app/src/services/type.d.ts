@@ -15,13 +15,6 @@ export type LoginParams = Record<'username' | 'password' | 'code', string>
 export type LoginType =  {
     token: string
   }
-
-// info返回值类型
-export type InfoResType = {
-  code: number
-  msg: string
-  data?: infoDataType
-}
 // info返回值类型
 export type infoDataType = {
   age: number
@@ -177,5 +170,46 @@ export type UserListType = {
 export type UserListResType = {
   list: UserListType[]
   total: number
+}
+// 试卷列表返回值类型
+export type ExamListType = {
+  total:number
+  totalPage:number
+  list:ExamListItemType[]
+}
+export type ExamListItemType = {
+  classify:string
+  createTime:number
+  creator:string
+  name:string
+  questions:string[]
+  __v:number
+  _id:string
+}
+// 试卷详情返回值类型
+export type detailExamType = {
+  name:string
+  classify:string
+  __v:number
+  createTime:string
+  creator:string
+  _id:string
+  questions:questionItemType[]
+}
+
+export type questionItemType = {
+  name:string
+  _id:string
+  classify:string
+  __v:number
+  createTime:string
+  type:string
+  options:string[]
+}
+// 试题类型列表返回值类型
+export type questionTypeRes = {
+  name:string
+  value:number
+  _id:string
 }
 
