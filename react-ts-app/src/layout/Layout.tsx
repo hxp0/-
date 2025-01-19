@@ -29,7 +29,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = (props) => {
   const navigate = useNavigate()
   const menuList = useSelector((state: RootState) => state.menuList.menuList)
   const info = useSelector((state: RootState) => state.info.info)
-  console.log(info)
   const list = useMemo(()=>{
     const arr:any = {
       route:{
