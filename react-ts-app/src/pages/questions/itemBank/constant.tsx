@@ -50,9 +50,9 @@ export const ConstantFn = ({ editFn, delFn, showDrawer, types, classify }: Param
       dataIndex: 'operate',
       render:( _ , record ) =>
         <>
-          <Button type='primary' style={{marginRight: '5px'}} onClick={()=>editFn(record)}>编辑</Button>
-          <Button type='primary' danger style={{marginRight: '5px'}} onClick={()=>delFn(record)}>删除</Button>
-          <Button type='default'  onClick={()=>showDrawer(record)}>试题详情</Button>
+          <Button size='small' type='primary' style={{marginRight: '5px'}} onClick={()=>editFn(record)}>编辑</Button>
+          <Button size='small' type='primary' danger style={{marginRight: '5px'}} onClick={()=>delFn(record)}>删除</Button>
+          <Button size='small' type='default'  onClick={()=>showDrawer(record)}>试题详情</Button>
         </>
     },
   ];

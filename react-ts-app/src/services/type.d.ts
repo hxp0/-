@@ -15,13 +15,6 @@ export type LoginParams = Record<'username' | 'password' | 'code', string>
 export type LoginType =  {
     token: string
   }
-
-// info返回值类型
-export type InfoResType = {
-  code: number
-  msg: string
-  data?: infoDataType
-}
 // info返回值类型
 export type infoDataType = {
   age: number
@@ -67,8 +60,9 @@ export type QuestionType =  {
 export type QuestionListItem = {
   answer: string
   classify: string
-  options: string[]
+  options?: string[]
   question: string
+  desc?: string
   type: string
   __v: number
   _id: string
@@ -94,7 +88,8 @@ export type QuestionTypeListItem = {
 }
 // 编辑试题参数类型
 export type UpdateQuestionParams = Partial<Omit<QuestionListItem, '_v'> & { id: string }>
-
+// 添加试题接口参数类型
+export type CreateQuestionParams = Omit<QuestionListItem, '_v'>
 
 
 // 考试记录列表公共 参数类型
@@ -107,7 +102,7 @@ export type RecordParams = {
 // 考试记录列表里试题类型
 export type RecordQuestion = {
   _id: string
-  answer: string
+  answer: string | string[]
   classify: string
   question: string
   options: string[]
@@ -177,5 +172,46 @@ export type UserListType = {
 export type UserListResType = {
   list: UserListType[]
   total: number
+}
+// 试卷列表返回值类型
+export type ExamListType = {
+  total:number
+  totalPage:number
+  list:ExamListItemType[]
+}
+export type ExamListItemType = {
+  classify:string
+  createTime:number
+  creator:string
+  name:string
+  questions:string[]
+  __v:number
+  _id:string
+}
+// 试卷详情返回值类型
+export type detailExamType = {
+  name:string
+  classify:string
+  __v:number
+  createTime:string
+  creator:string
+  _id:string
+  questions:questionItemType[]
+}
+
+export type questionItemType = {
+  name:string
+  _id:string
+  classify:string
+  __v:number
+  createTime:string
+  type:string
+  options:string[]
+}
+// 试题类型列表返回值类型
+export type questionTypeRes = {
+  name:string
+  value:number
+  _id:string
 }
 

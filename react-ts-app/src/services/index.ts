@@ -1,4 +1,3 @@
-
 import request from './request'
 import {
   BaseType,
@@ -8,13 +7,18 @@ import {
   QuestionType,
   QuestionListParams,
   QuestionTypeList,
-  InfoResType,
   UpdateQuestionParams,
-  RecordParams,
-  RecordResType,
+  CreateQuestionParams,
   ClassResType,
   SubjectResType,
-  UserListResType
+  UserListResType,
+  infoDataType,
+  RecordParams,
+  RecordResType,
+  menulistDataType,
+  ExamListType,
+  detailExamType,
+  questionTypeRes
 } from './type'
 
 
@@ -33,10 +37,10 @@ export const logoutApi = ()=>{
   return request.post('/user/logout')
 }
 export const getInfoApi = ()=>{
-  return request.get<InfoResType>('/user/info')
+  return request.get<BaseType<infoDataType>>('/user/info')
 }
 export const menulistApi = ()=>{
-  return request.get('/user/menulist')
+  return request.get<BaseType<{list:menulistDataType[]}>>('/user/menulist')
 }
 
 // 试题库接口
@@ -60,6 +64,10 @@ export const delQuestionApi = ( params:{ id: string } ) => {
   return request.post<BaseType<QuestionTypeList>>('/question/remove', params)
 }
 
+// 添加试题
+export const createQuestionApi = ( params: CreateQuestionParams ) => {
+  return request.post<BaseType<QuestionTypeList>>('/question/create', params)
+}
 
 // 考试记录接口
 export const getRecordApi = (params:RecordParams)=>{
@@ -99,4 +107,33 @@ export const getUserApi = ( params: RecordParams )=>{
   return request.get<BaseType<UserListResType>>('/user/list', {
     params
   })
+}
+// 获取试卷列表
+export const examApi = (params={})=>{
+  return request.get<BaseType<ExamListType>>('/exam/list',{params})
+}
+// 删除试卷
+export const DeleteExamApi = (id:string)=>{
+  return request.post(`/exam/remove`,{id})
+}
+// 获取试卷详情
+export const detailExamApi = (id:string)=>{
+  return request.get<BaseType<detailExamType>>(`/exam/detail?id=${id}`)
+}
+
+// 获取试题类型列表
+export const questionTypeApi = ()=>{
+  return request.get<BaseType<{list:questionTypeRes[]}>>(`/question/type/list`)
+}
+// 获取考试科目列表
+export const classifyListApi = ()=>{
+  return request.get(`/classify/list`)
+}
+// 获取试题科目列表
+export const questionListApi = (classify:string)=>{
+  return request.get(`/question/list?classify=${classify}`)
+}
+// 创建试卷
+export const examCreateApi = (params)=>{
+  return request.post(`/exam/create`,params)
 }
