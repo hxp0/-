@@ -12,10 +12,10 @@ import {
   Dropdown,
   message
 } from 'antd';
-import React, {  useMemo } from 'react';
+import React, {  useMemo } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { useSelector } from 'react-redux';
-import type { RootState } from '../store';
+import { useSelector } from 'react-redux'
+import type { RootState } from '../store'
 import {
   CrownFilled,
   HomeOutlined
@@ -29,7 +29,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = (props) => {
   const navigate = useNavigate()
   const menuList = useSelector((state: RootState) => state.menuList.menuList)
   const info = useSelector((state: RootState) => state.info.info)
-  // console.log(info)
+  console.log(info)
   const list = useMemo(()=>{
     const arr:any = {
       route:{
@@ -136,7 +136,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = (props) => {
                                 message.success('退出登录成功')
                                 navigate('/user/login')
                                 localStorage.removeItem('token')
-                                localStorage.removeItem('permission')
                             })
                           }
                         }
