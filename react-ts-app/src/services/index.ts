@@ -1,4 +1,3 @@
-
 import request from './request'
 import {
   BaseType,
@@ -9,6 +8,7 @@ import {
   QuestionListParams,
   QuestionTypeList,
   UpdateQuestionParams,
+  CreateQuestionParams,
   ClassResType,
   SubjectResType,
   UserListResType,
@@ -64,6 +64,10 @@ export const delQuestionApi = ( params:{ id: string } ) => {
   return request.post<BaseType<QuestionTypeList>>('/question/remove', params)
 }
 
+// 添加试题
+export const createQuestionApi = ( params: CreateQuestionParams ) => {
+  return request.post<BaseType<QuestionTypeList>>('/question/create', params)
+}
 
 // 考试记录接口
 export const getRecordApi = (params:RecordParams)=>{
@@ -133,6 +137,3 @@ export const questionListApi = (classify:string)=>{
 export const examCreateApi = (params)=>{
   return request.post(`/exam/create`,params)
 }
-
-
-
