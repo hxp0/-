@@ -11,7 +11,10 @@ import {
   InfoResType,
   UpdateQuestionParams,
   RecordParams,
-  RecordResType
+  RecordResType,
+  ClassResType,
+  SubjectResType,
+  UserListResType
 } from './type'
 
 
@@ -64,4 +67,36 @@ export const getRecordApi = (params:RecordParams)=>{
     {params}
    )
   return res
+}
+
+// 查询班级接口
+export const getClassApi = (params:RecordParams)=>{
+  return request.get<BaseType<ClassResType>>('/studentGroup/list',{
+    params
+  })
+}
+//查询科目接口
+export const getSubjectApi = (params:RecordParams)=>{
+  return request.get<BaseType<SubjectResType>>('classify/list',{
+    params
+  })
+}
+// 删除考试记录接口
+export const delRecordApi = (id:string)=>{
+  return request.post('examination/remove',{
+    id
+  })
+}
+// 编辑考试接口
+export const editRecordApi = (params:string)=>{
+  return request.post('examination/edit',{
+    params
+  })
+}
+
+//用户列表接口
+export const getUserApi = ( params: RecordParams )=>{
+  return request.get<BaseType<UserListResType>>('/user/list', {
+    params
+  })
 }
