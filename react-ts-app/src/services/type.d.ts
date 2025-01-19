@@ -90,6 +90,18 @@ export type QuestionTypeListItem = {
 export type UpdateQuestionParams = Partial<Omit<QuestionListItem, '_v'> & { id: string }>
 // 添加试题接口参数类型
 export type CreateQuestionParams = Omit<QuestionListItem, '_v'>
+// 批量创建试题接口参数类型
+export type createMultipleQuestionParams = {
+  list: ExcelData[]
+}
+export type ExcelData = {
+  question: string
+  type: number
+  classify: string
+  answer: string
+  options: string[]
+  desc:  string
+}
 
 
 // 考试记录列表公共 参数类型

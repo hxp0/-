@@ -9,6 +9,7 @@ import {
   QuestionTypeList,
   UpdateQuestionParams,
   CreateQuestionParams,
+  createMultipleQuestionParams,
   ClassResType,
   SubjectResType,
   UserListResType,
@@ -53,20 +54,21 @@ export const getQuestionApi = ( params: QuestionListParams | null = null )=>{
 export const getQuestionTypeApi = () => {
   return request.get<BaseType<QuestionTypeList>>('/question/type/list')
 }
-
 // 编辑题目
 export const updateQuestionApi = ( params: UpdateQuestionParams ) => {
   return request.post<BaseType<QuestionTypeList>>('/question/update', params)
 }
-
 // 删除题目
 export const delQuestionApi = ( params:{ id: string } ) => {
   return request.post<BaseType<QuestionTypeList>>('/question/remove', params)
 }
-
 // 添加试题
 export const createQuestionApi = ( params: CreateQuestionParams ) => {
   return request.post<BaseType<QuestionTypeList>>('/question/create', params)
+}
+// 批量创建试题
+export const createMultipleQuestionApi = ( params: createMultipleQuestionParams ) => {
+  return request.post<BaseType<null>>('/question/create/multiple', params)
 }
 
 // 考试记录接口
