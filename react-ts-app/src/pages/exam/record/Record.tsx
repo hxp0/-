@@ -3,13 +3,17 @@ import { getRecordApi, getClassApi, getSubjectApi } from '../../../services';
 import type { RecordListType } from '../../../services/type';
 
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { DrawerForm, ProTable } from '@ant-design/pro-components';
+import { ProTable } from '@ant-design/pro-components';
 import { Button, Space, Modal, message } from 'antd';
 // import classNames from 'classnames';
 import { delRecordApi } from '../../../services/index';
-
+import DrawerForm from './components/DrawerForm';
 const record:React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [id, setId] = useState('')
+
+
   const valueEnum = new Map([
     [1, {text: '已结束'}],
     [2, {text: '未开始'}],
@@ -168,62 +172,19 @@ const record:React.FC = () => {
       width: 160,
       render: (_,record) => {
         return (
-          record.status !== 2 ? (
-            <Space>
-              <DrawerForm
-                title="试卷预览"
-                trigger={
-                  <Button type="primary" size="small">预览试卷</Button>
-                }
-                submitter={{
-                  searchConfig:{
-                    submitText: '确定',
-                    resetText: '导出PDF',
-                  },
-                  resetButtonProps: {
-                    type: "default",
-                    
-                  },
-                  submitButtonProps: {
-                    type: "primary",
-                  },
-                }}
-              />
-              <Button type="primary" size="small" disabled> 删除 </Button>
-            </Space>
-          ) : (
-            <Space>
-              <DrawerForm
-                title="试卷预览"
-                trigger={
-                  <Button type="primary" size="small">预览试卷</Button>
-                }
-                submitter={{
-                  searchConfig:{
-                    submitText: '确定',
-                    resetText: '导出PDF',
-                  },
-                  resetButtonProps: {
-                    type: "default",
-                    
-                  },
-                  submitButtonProps: {
-                    type: "primary",
-                  },
-                }}
-              />
-              <Button type="primary" size="small" onClick={() => setIsModalOpen(true)}> 删除 </Button>
-              <Modal title="警告" open={isModalOpen} onOk={() => handleOk(record._id)} onCancel={handleCancel}>
-                <p>确定删除吗？</p> 
-              </Modal>
-            </Space>
-            
-          )
-        ) 
-                
-      
-        
-      },
+          <Space>
+            <Button type="primary" size="small" onClick={() => {
+              setId(record._id)
+              setOpen(true)
+            } }
+              >预览试卷</Button>
+            <Button type="primary" size="small" disabled={record.status !== 2? true : false} onClick={() => setIsModalOpen(true)}> 删除 </Button>
+            <Modal title="警告" open={isModalOpen} onOk={() => handleOk(record._id)} onCancel={handleCancel}>
+              <p>确定删除吗？</p> 
+            </Modal>
+          </Space>
+        )
+      }
     },
     {
       title: '操作',
@@ -250,45 +211,45 @@ const record:React.FC = () => {
   ];
 
   return (
-    <ProTable<RecordListType>
-      columns={columns}
-      actionRef={actionRef}
-      cardBordered
-      request={async (params) => {
-        // console.log(params,sorter,filter)
-        const { current , pageSize,...others } = params
-        const res = await getRecordApi({ 
-          page:current!,
-          pagesize:pageSize!,
-          ...others 
-        })
-        if(res.data.data.list.length === 0){
-          
-        }
-        console.log(res.data.data.list)
-        return {
-          data: res.data.data.list,
-          total: res.data.data.total,
-          success: true,
-        }
-      }}
-      editable={{
-        type: 'multiple',
-      }}
-      rowKey="_id"
-      search={{
-        labelWidth: 'auto',
-      }}
-      pagination={{
-        defaultPageSize: 5,
-        showSizeChanger: true,
-        pageSizeOptions: ['5', '10', '20', '50'],
-        showQuickJumper: true,
-      }}
-      dateFormatter="string"
-      headerTitle="考试记录"
-      scroll={{ x: 1300 }}
-    />
+    <>
+      <ProTable<RecordListType>
+        columns={columns}
+        actionRef={actionRef}
+        cardBordered
+        request={async (params) => {
+          // console.log(params,sorter,filter)
+          const { current , pageSize,...others } = params
+          const res = await getRecordApi({ 
+            page:current!,
+            pagesize:pageSize!,
+            ...others 
+          })
+          return {
+            data: res.data.data.list,
+            total: res.data.data.total,
+            success: true,
+          }
+        }}
+        editable={{
+          type: 'multiple',
+        }}
+        rowKey="_id"
+        search={{
+          labelWidth: 'auto',
+        }}
+        pagination={{
+          defaultPageSize: 5,
+          showSizeChanger: true,
+          pageSizeOptions: ['5', '10', '20', '50'],
+          showQuickJumper: true,
+        }}
+        dateFormatter="string"
+        headerTitle="考试记录"
+        scroll={{ x: 1300 }}
+        
+      />
+      {open && <DrawerForm open={open} setOpen={setOpen} id={id}/>}
+    </>
   );
 };
 export default record;
