@@ -16,6 +16,7 @@ import {
   infoDataType,
   RecordParams,
   RecordResType,
+  RecordDetailType,
   menulistDataType,
   ExamListType,
   detailExamType,
@@ -97,7 +98,7 @@ export const delRecordApi = (id:string)=>{
     id
   })
 }
-// 编辑考试接口
+// 编辑考试记录接口
 export const editRecordApi = (params:string)=>{
   return request.post('examination/edit',{
     params
@@ -110,6 +111,16 @@ export const getUserApi = ( params: RecordParams )=>{
     params
   })
 }
+// 获取考试记录详情
+export const getRecordDetailApi = (id:string)=>{
+  return request.get<BaseType<RecordDetailType>>(`/examination/detail?id=${id}`)
+}
+// 获取创建考试记录
+export const createRecordApi = (params:any)=>{
+  return request.post(`/examination/create?1737354874508`,params)
+}
+
+
 // 获取试卷列表
 export const examApi = (params={})=>{
   return request.get<BaseType<ExamListType>>('/exam/list',{params})

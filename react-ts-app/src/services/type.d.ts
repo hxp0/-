@@ -118,7 +118,9 @@ export type RecordQuestion = {
   classify: string
   question: string
   options: string[]
-  score: number
+  score?: number
+  __v: number
+  type: string
 }
 // 考试记录列表参数类型
 export type RecordListType = {
@@ -166,6 +168,28 @@ export type SubjectResType = {
   list: SubjectListType[]
   total: number
 }
+// 考试记录详情问题参数类型
+export type RecordQuestionDetail = {
+  _id: string
+  answer: string
+  classify: string
+  question: string
+  options: string[]
+  type: string
+  __v: number
+}
+// 考试记录详情返回值类型
+export type RecordDetailType = {
+  _id: string
+  classify: string
+  createTime: number
+  creator: string
+  name: string
+  questionsList: RecordQuestionDetail[]
+}
+
+
+
 // 用户列表参数类型
 export type UserListType = {
   _id: string
