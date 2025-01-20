@@ -19,7 +19,15 @@ import {
   menulistDataType,
   ExamListType,
   detailExamType,
-  questionTypeRes
+  questionTypeRes,
+  StudentGroupParams,
+  StudentGroupType,
+  StudentGroupEditParams,
+  StudentGroupCreateParams,
+  StudentParams,
+  StudentType,
+  StudentEditParams,
+  StudentCreateParams
 } from './type'
 
 
@@ -138,4 +146,42 @@ export const questionListApi = (classify:string)=>{
 // 创建试卷
 export const examCreateApi = (params)=>{
   return request.post(`/exam/create`,params)
+}
+
+// 查询班级
+export const StudentGroupListApi = ( params: StudentGroupParams | null = null )=>{
+  return request.get<BaseType<StudentGroupType>>('/studentGroup/list', {
+    params
+  })
+}
+// 编辑班级
+export const StudentGroupEditApi = (params: StudentGroupEditParams)=>{
+  return request.post<BaseType<null>>('/studentGroup/update', params)
+}
+// 创建班级 
+export const StudentGroupCreateApi = (params: StudentGroupCreateParams)=>{
+  return request.post<BaseType<null>>('/studentGroup/create', params)
+}
+// 删除班级
+export const StudentGroupDeleteApi = (params:{ id: string })=>{
+  return request.post<BaseType<null>>('/studentGroup/remove', params )
+}
+
+// 查询学生
+export const StudentListApi = ( params: StudentParams )=>{
+  return request.get<BaseType<StudentType>>('/student/list', {
+    params
+  })
+}
+// 编辑学生
+export const StudentEditApi = (params: StudentEditParams)=>{
+  return request.post<BaseType<null>>('/student/update', params)
+}
+// 创建学生
+export const StudentCreateApi = (params: StudentCreateParams)=>{
+  return request.post<BaseType<null>>('/student/create', params)
+}
+// 删除学生
+export const StudentDeleteApi = (params:{ id: string })=>{
+  return request.post<BaseType<null>>('/student/remove', params )
 }

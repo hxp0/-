@@ -227,3 +227,83 @@ export type questionTypeRes = {
   _id:string
 }
 
+// 班级查询接口参数类型
+export type StudentGroupParams = {
+  page: number
+  pagesize: number
+  name: string
+  classify?: string
+  teacher?: string
+}
+// 班级查询接口返回值类型
+export type StudentGroupType = {
+  total: number
+  list: StudentGroupListItemType[]
+}
+export type StudentGroupListItemType = {
+  _id: string
+  name: string
+  classify: string
+  teacher: string
+  students: number[]
+  creator: string
+  createTime: number
+  __v: number
+}
+// 编辑班级接口参数类型
+export type StudentGroupEditParams = { id: string } & Omit<StudentGroupListItemType, '_id' | '__v'>
+// 创建班级接口参数类型
+export type StudentGroupCreateParams = Omit<StudentGroupListItemType, '_id' | '__v'>
+
+// 查询学生接口参数类型
+export type StudentParams = {
+  page: number
+  pagesize: number
+  sex?: string
+  username?: string
+  age?: number
+  className?: string
+}
+// 查询学生接口返回值类型
+export type StudentType = {
+  total: number
+  list: []
+}
+export type StudentListItemType = {
+  _id: string
+  password: string
+  sex: string
+  age: number
+  email: string
+  className: string
+  avator: string
+  status: number
+  creator: string
+  createTime: number
+  __v: number
+  role: string
+  username: string
+  classId: string
+  exams: []
+  idCard: string
+}
+// 编辑学生接口参数类型
+export type StudentEditParams = {
+  id: string
+  username?: string
+  sex?: string
+  age?: number
+  className?: string
+}
+// 创建学生接口参数类型
+export type StudentCreateParams = {
+  password: string
+  sex: string
+  age: number
+  email: string
+  className: string
+  avator: string
+  status: number
+  username: string
+  idCard: string
+}
