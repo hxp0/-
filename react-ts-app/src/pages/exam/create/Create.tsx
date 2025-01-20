@@ -144,7 +144,7 @@ const Create: React.FC = () => {
           //   classify:values.subject,
           //   examId:values.examId,
           //   examiner:values.examId,
-          //   group:options.find(item => item.value === values.group),
+          //   group:values.group,
           //   startTime:values.dateTime[0],
           //   endTime:values.dateTime[1],
           // })

@@ -115,7 +115,7 @@ export const getRecordDetailApi = (id:string)=>{
 }
 // 获取创建考试记录
 export const createRecordApi = (params:any)=>{
-  return request.post(`/examination/create`,params)
+  return request.post(`/examination/create?1737354874508`,params)
 }
 
 

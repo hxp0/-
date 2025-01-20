@@ -2,6 +2,9 @@ import React, { useEffect, useState, useMemo } from 'react'
 import { Drawer,Button } from 'antd'
 import { getRecordDetailApi,questionTypeApi } from '../../../../services/index'
 import type { questionTypeRes, RecordDetailType, RecordQuestionDetail } from '../../../../services/type'
+import { usePDF } from 'react-to-pdf';
+
+
 
 interface Props {
   open:boolean
@@ -15,6 +18,11 @@ const DrawerForm: React.FC<Props> = (props) => {
   const [data,setData] = useState<RecordDetailType>({} as RecordDetailType)
   const [questionType,setQuestionType] = useState<questionTypeRes[]>([])
   const charCode = ['A','B','C','D']
+  const { toPDF, targetRef } = usePDF({
+    filename:'导出文档.pdf'
+  })
+
+
 
   const getDetailRecord = async()=>{
     const res = await getRecordDetailApi(id)
@@ -46,7 +54,10 @@ const DrawerForm: React.FC<Props> = (props) => {
     })
     return arr
 },[data])
-
+  
+  const exportPDF = () => {
+    toPDF()
+  }
 
   useEffect(()=>{
     getDetailRecord()
@@ -59,7 +70,7 @@ const DrawerForm: React.FC<Props> = (props) => {
       title={<div style={{display:'flex',justifyContent:'space-between'}}>
               <h4>试卷预览</h4>
               <div>
-                  <Button >导出PDF</Button>
+                  <Button onClick={exportPDF}>导出PDF</Button>
                   <Button type='primary' style={{marginLeft:15}}>OK</Button>
               </div>   
         </div>}
@@ -68,28 +79,30 @@ const DrawerForm: React.FC<Props> = (props) => {
       onClose={() => setOpen(false)}
       width={600}
     >
-      <h2 style={{ textAlign:'center' }}>{data.name}</h2>
-      <p style={{textAlign:'center',margin: 15}}>科目：{data.classify}</p>
-      <div>
-        {
-          questionList.map((item) => {
-            return (
-              <div key={item._id} style={{fontSize:16}}>
-                  {item.list.length>0 && <h4 style={{color:'#1890ff'}}>{item.name}</h4>}
-                  {item.list.map((v:any,i:number)=>{
-                    return (
-                      <div key={i}>
-                          <h5 style={{marginTop:15,fontWeight:'normal',fontSize:16}}>{i+1}.{v.question}</h5>
-                          {v.options.map((val:any,index:number)=>{
-                              return <p key={index} style={{margin:15}}>{charCode[index]}.{val}</p>
-                          })}
-                      </div>
-                    )
-                  })}
-              </div>
-            )
-          })
-        }
+      <div ref={targetRef}>
+        <h2 style={{ textAlign:'center' }}>{data.name}</h2>
+        <p style={{textAlign:'center',margin: 15}}>科目：{data.classify}</p>
+        <div>
+          {
+            questionList.map((item) => {
+              return (
+                <div key={item._id} style={{fontSize:16}}>
+                    {item.list.length>0 && <h4 style={{color:'#1890ff'}}>{item.name}</h4>}
+                    {item.list.map((v:any,i:number)=>{
+                      return (
+                        <div key={i}>
+                            <h5 style={{marginTop:15,fontWeight:'normal',fontSize:16}}>{i+1}.{v.question}</h5>
+                            {v.options.map((val:any,index:number)=>{
+                                return <p key={index} style={{margin:15}}>{charCode[index]}.{val}</p>
+                            })}
+                        </div>
+                      )
+                    })}
+                </div>
+              )
+            })
+          }
+        </div>  
       </div> 
 
     </Drawer>
