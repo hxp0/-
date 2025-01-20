@@ -18,7 +18,10 @@ import {
   menulistDataType,
   ExamListType,
   detailExamType,
-  questionTypeRes
+  questionTypeRes,
+  examParamsType,
+  permissionListType,
+  roleListType
 } from './type'
 
 
@@ -134,6 +137,27 @@ export const questionListApi = (classify:string)=>{
   return request.get(`/question/list?classify=${classify}`)
 }
 // 创建试卷
-export const examCreateApi = (params)=>{
+export const examCreateApi = (params:examParamsType)=>{
   return request.post(`/exam/create`,params)
 }
+// 获取角色列表
+export const roleListApi = ()=>{
+  return request.get<BaseType<roleListType>>(`/role/list`)
+}
+// 获取权限列表
+export const permissionListApi = ()=>{
+  return request.get<BaseType<permissionListType>>(`/permission/list`)
+}
+// 添加角色
+export const roleAddApi = (params:{name:string,value:string})=>{
+  return request.post<{msg:string,code:number}>(`/role/create`,params)
+}
+// 删除角色
+export const roleDeleteApi = (id:string)=>{
+  return request.post<{msg:string,code:number}>(`/role/remove`,{id})
+}
+// 编辑角色
+export const roleEditApi = (params:{id:string,name:string,permission:string[]})=>{
+  return request.post<{msg:string,code:number}>(`/role/update`,params)
+}
+

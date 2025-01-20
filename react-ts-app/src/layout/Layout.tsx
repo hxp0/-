@@ -42,7 +42,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = (props) => {
           path: item.path,
           name: item.name,
           icon: <CrownFilled />,
-          routes:item.children.map((v:any)=>{
+          routes:item.children?.map((v:any)=>{
             return {
               path: v.path,
               name: v.name,
