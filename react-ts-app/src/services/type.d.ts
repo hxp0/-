@@ -331,3 +331,51 @@ export type StudentCreateParams = {
   username: string
   idCard: string
 }
+export type examParamsType = {
+  name:string
+  classify:string
+  questions:string[]
+}
+// 权限列表返回值类型
+export type permissionListType = {
+  list:{
+    name:string
+    classify:string
+    __v:number
+    createTime:string
+    creator:string
+    _id:string
+    disabled:boolean
+    isBtn:boolean
+    path:string
+    pid:string
+    children?:{
+      name:string
+      classify:string
+      __v:number
+      createTime:string
+      creator:string
+      _id:string
+      disabled:boolean
+      isBtn:boolean
+      path:string
+      pid:string
+    }[]
+  }[]
+}
+// 角色列表返回值类型
+export type roleListType = {
+  totalPage:number
+  total:number
+  list:roleListItemType[] 
+}
+type roleListItemType = {
+  name:string
+  _id:string
+  createTime:number
+  creator:string
+  permission:string[]
+  __v:number
+  disabled:boolean
+  value:string
+}
