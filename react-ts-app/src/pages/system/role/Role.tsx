@@ -8,21 +8,14 @@ import getClumns from './constant'
 import type { DataType } from './constant'
 import type { roleListItemType } from '../../../services/type'
 
-
-
-
-
-
 const Role: React.FC = () => {
   const [data,setData] = useState<roleListItemType[]>([])
   const [isOpen,setIsOpen] = useState(false)
   const [record,setRecord] = useState<DataType>({} as DataType)
   const [show,setShow] = useState(false)
-  
   const getRoleList = async ()=>{
     const res = await roleListApi()
     if(res.data.code === 200){
-      console.log(res.data.data.list)
       setData(res.data.data.list)
     }
   }
@@ -39,7 +32,7 @@ const Role: React.FC = () => {
           setShow(true)
         }}>+添加角色</Button>
       <Table<roleListItemType> columns={columns} dataSource={data} rowKey='_id'/>
-      <DrawerComponent isOpen={isOpen} setIsopen={setIsOpen} record={record} />
+      <DrawerComponent isOpen={isOpen} setIsopen={setIsOpen} record={record} getRoleList={getRoleList}/>
       <ModalComponents show={show} setShow={setShow} getRoleList={getRoleList}/>
     </>
   );

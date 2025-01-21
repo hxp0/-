@@ -17,7 +17,7 @@ export type LoginType =  {
   }
 // info返回值类型
 export type infoDataType = {
-  age: number
+  age?: number
   avator?: string
   email?: string
   permission:{

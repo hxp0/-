@@ -64,7 +64,6 @@ const AddPaper =  () => {
             classify,
             questions:questionList.map((v:any)=>v._id)
           })
-          console.log(res)
           if(res.data.code === 200){
             message.success('提交成功')
             navigate('/paper/paper-bank')
@@ -82,7 +81,6 @@ const AddPaper =  () => {
           name="base"
           title="试卷基础信息"
           onFinish={async () => {
-            console.log(formRef.current?.getFieldsValue())
             setFormInfo({
             ...formInfo,
             ...formRef.current?.getFieldsValue()
@@ -110,7 +108,6 @@ const AddPaper =  () => {
           name="checkbox"
           title="选择组卷方式&科目"
           onFinish={async () => {
-            console.log(formRef.current?.getFieldsValue());
             setFormInfo({
               ...formInfo,
               ...formRef.current?.getFieldsValue(),

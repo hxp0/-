@@ -144,7 +144,10 @@ export const DeleteExamApi = (id:string)=>{
 export const detailExamApi = (id:string)=>{
   return request.get<BaseType<detailExamType>>(`/exam/detail?id=${id}`)
 }
-
+// 编辑试卷
+export const editExamApi = (params:{id:string,name:string})=>{
+  return request.post<{msg:string,code:number}>(`exam/update`,params)
+}
 // 获取试题类型列表
 export const questionTypeApi = ()=>{
   return request.get<BaseType<{list:questionTypeRes[]}>>(`/question/type/list`)
@@ -219,4 +222,11 @@ export const roleDeleteApi = (id:string)=>{
 export const roleEditApi = (params:{id:string,name:string,permission:string[]})=>{
   return request.post<{msg:string,code:number}>(`/role/update`,params)
 }
-
+// 上传头像
+export const uploadAvatarApi = (avatar:FormData)=>{
+  return request.post<{msg:string,code:number,data:{url:string}}>(`/profile`,avatar)
+}
+// 更新用户信息
+export const updateUserInfoApi = (params:Omit<infoDataType,'id' | 'permission' | 'role'>)=>{
+  return request.post<{msg:string,code:number}>(`/user/update/info`,params)
+}

@@ -2,9 +2,10 @@ import React,{useState} from 'react'
 import type { ActionType } from '@ant-design/pro-components'
 import { ProTable } from '@ant-design/pro-components'
 import { useRef } from 'react'
-import { examApi } from '../../../services'
+import { examApi,editExamApi } from '../../../services'
 import DrawerComponent from './components/DrawerComponent'
 import getColumns from './constant'
+import { message } from 'antd'
 
 
 const PaperBank:React.FC = () => {
@@ -32,6 +33,18 @@ const PaperBank:React.FC = () => {
       }}
       editable={{
         type: 'multiple',
+        onSave: async (id,row) => {
+          const res = await editExamApi({
+            id:row._id,
+            name:row.name
+          })
+          if(res.data.code === 200){
+            actionRef.current?.reload()
+            message.success('更新成功')
+          }else{
+            message.error('更新失败')
+          }
+        },
       }}
       rowKey="_id"
       search={{

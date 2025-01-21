@@ -3,16 +3,16 @@ import { Button, Drawer, message, Tree  } from 'antd'
 import type { TreeDataNode, TreeProps } from 'antd'
 import { permissionListApi,roleEditApi } from '../../../../services'
 import type { DataType } from '../constant'
-import type { Key } from 'node:readline'
 
 interface Props {
     isOpen:boolean
     setIsopen:(val:boolean)=>void
     record:DataType
+    getRoleList:()=>void
 }
 
 
-const DrawerComponent:React.FC<Props> = ({isOpen,setIsopen,record})=> {
+const DrawerComponent:React.FC<Props> = ({isOpen,setIsopen,record,getRoleList})=> {
     const [treeData,setTreeData] = useState<TreeDataNode[]>([])
     const [selectedKeys,setSelectedKeys] = useState<any>([])
     const [checkedKeys,setCheckedKeys] = useState<any>([])
@@ -48,7 +48,7 @@ const DrawerComponent:React.FC<Props> = ({isOpen,setIsopen,record})=> {
         })
         if(res.data.code === 200){
             message.success('分配成功')
-            getPermissionListApi()
+            getRoleList()
             setIsopen(false)
         }else{
             message.error(res.data.msg)
