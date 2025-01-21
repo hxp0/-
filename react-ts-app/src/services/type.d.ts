@@ -187,6 +187,16 @@ export type RecordDetailType = {
   name: string
   questionsList: RecordQuestionDetail[]
 }
+// 创建考试记录参数类型
+export type CreateRecordParams = {
+  classify: string
+  name: string
+  examId: string
+  group: string
+  examiner: string
+  startTime: string
+  endTime: string
+}
 
 
 
@@ -209,6 +219,18 @@ export type UserListResType = {
   list: UserListType[]
   total: number
 }
+// 创建用户参数类型
+export type CreateUserParams = {
+  username: string
+  password: string
+  status: number
+}
+// 更新用户接口参数类型
+export type updateUserParams = { id: string } & Partial<Omit<UserListType,'_id'|'lastOnlineTime' | 'creator'>>
+
+
+
+
 // 试卷列表返回值类型
 export type ExamListType = {
   total:number

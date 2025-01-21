@@ -17,6 +17,7 @@ import {
   RecordParams,
   RecordResType,
   RecordDetailType,
+  CreateRecordParams,
   menulistDataType,
   ExamListType,
   detailExamType,
@@ -31,7 +32,10 @@ import {
   StudentCreateParams,
   examParamsType,
   permissionListType,
-  roleListType
+  roleListType,
+  CreateUserParams,
+  UserListType,
+  updateUserParams,
 } from './type'
 
 
@@ -122,13 +126,29 @@ export const getUserApi = ( params: RecordParams )=>{
     params
   })
 }
+// 新增用户接口
+export const createUserApi = ( params: CreateUserParams )=>{
+  return request.post<BaseType<null>>('/user/create',params)
+}
+// 编辑用户接口
+export const updateUserApi = ( params: updateUserParams ) => {
+  return request.post<BaseType<null>>('/user/update',params)
+}
+// 删除用户接口
+export const delUserApi = ( id:string ) => {
+  return request.post<BaseType<null>>('/user/remove',{
+    id
+  })
+}
+
+
 // 获取考试记录详情
 export const getRecordDetailApi = (id:string)=>{
   return request.get<BaseType<RecordDetailType>>(`/examination/detail?id=${id}`)
 }
 // 获取创建考试记录
-export const createRecordApi = (params:any)=>{
-  return request.post(`/examination/create?1737354874508`,params)
+export const createRecordApi = (params:CreateRecordParams)=>{
+  return request.post(`/examination/create`,params)
 }
 
 
