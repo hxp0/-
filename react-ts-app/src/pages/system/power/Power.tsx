@@ -1,106 +1,71 @@
-import React from 'react'
-import { DownOutlined } from '@ant-design/icons'
-import type { TableColumnsType } from 'antd'
-import { Badge, Dropdown, Space, Table, Button } from 'antd'
+import React, { useState, useEffect } from 'react'
+import { Table, Button, message } from 'antd'
 import style from './Power.module.scss'
+import { permissionListApi, permissionDeleteApi } from '../../../services'
+import type { permissionListItem } from '../../../services/type'
+import { getTableData } from './constant'
+import DrawerCom from './components/DrawerCom'
 
-interface ExpandedDataType {
-  key: React.Key;
-  date: string;
-  name: string;
-  upgradeNum: string;
-}
+const Power: React.FC = () => {
+  const [open, setOpen] = useState<boolean>()
+  const [permissionList, setPermissionList] = useState<permissionListItem[]>()
+  const [editRow, setEditRow] = useState<permissionListItem | null>(null)
 
-interface DataType {
-  key: React.Key;
-  name: string;
-  platform: string;
-  version: string;
-  upgradeNum: number;
-  creator: string;
-  createdAt: string;
-}
+  const getPermissionList = async()=>{
+    const res = await permissionListApi()
+    setPermissionList(res.data.data.list)
+  }
 
-const items = [
-  { key: '1', label: 'Action 1' },
-  { key: '2', label: 'Action 2' },
-];
+  useEffect(()=>{
+    getPermissionList()
+  }, [])
 
-const expandDataSource = Array.from({ length: 3 }).map<ExpandedDataType>((_, i) => ({
-  key: i.toString(),
-  date: '2014-12-24 23:12:00',
-  name: 'This is production name',
-  upgradeNum: 'Upgraded: 56',
-}));
+  const editFn = ( row: permissionListItem )=>{
+    setOpen(true)
+    console.log(row)
+    setEditRow(row)
+  }
 
-const dataSource = Array.from({ length: 3 }).map<DataType>((_, i) => ({
-  key: i.toString(),
-  name: 'Screen',
-  platform: 'iOS',
-  version: '10.3.4.5654',
-  upgradeNum: 500,
-  creator: 'Jack',
-  createdAt: '2014-12-24 23:12:00',
-}));
+  const delFn = async( id: string )=>{
+    try{
+      const res = await permissionDeleteApi({id})
+      console.log(res.data)
+      if( res.data.code === 200 ){
+        getPermissionList()
+        message.success('删除成功')
+      }else{
+        message.error(res.data.msg)
+      }
+    }catch(e){
+      console.log(e)
+    }
+  }
+  
+  const { columns, dataSource } = getTableData({ list: permissionList!, editFn, delFn })
 
-const expandColumns: TableColumnsType<ExpandedDataType> = [
-  { title: 'Date', dataIndex: 'date', key: 'date' },
-  { title: 'Name', dataIndex: 'name', key: 'name' },
-  {
-    title: 'Status',
-    key: 'state',
-    render: () => <Badge status="success" text="Finished" />,
-  },
-  { title: 'Upgrade Status', dataIndex: 'upgradeNum', key: 'upgradeNum' },
-  {
-    title: 'Action',
-    key: 'operation',
-    render: () => (
-      <Space size="middle">
-        <a>Pause</a>
-        <a>Stop</a>
-        <Dropdown menu={{ items }}>
-          <a>
-            More <DownOutlined />
-          </a>
-        </Dropdown>
-      </Space>
-    ),
-  },
-];
-
-const columns: TableColumnsType<DataType> = [
-  { title: 'Name', dataIndex: 'name', key: 'name' },
-  { title: 'Platform', dataIndex: 'platform', key: 'platform' },
-  { title: 'Version', dataIndex: 'version', key: 'version' },
-  { title: 'Upgraded', dataIndex: 'upgradeNum', key: 'upgradeNum' },
-  { title: 'Creator', dataIndex: 'creator', key: 'creator' },
-  { title: 'Date', dataIndex: 'createdAt', key: 'createdAt' },
-  { title: 'Action', key: 'operation', render: () => <a>Publish</a> },
-];
-
-const expandedRowRender = () => (
-  <Table<ExpandedDataType>
-    columns={expandColumns}
-    dataSource={expandDataSource}
-    pagination={false}
-  />
-);
-
-const Power: React.FC = () => (
-  <>
-    <div className={style.title}>
-     <h3>菜单列表</h3>
-     <Button type='primary'>添加菜单</Button>
-    </div>
-    <Table<DataType>
-      columns={columns}
-      expandable={{ expandedRowRender, defaultExpandedRowKeys: ['0'] }}
-      dataSource={dataSource}
-      size="middle"
-      pagination={false}
-    />
-  </>
-);
+  return (
+    <>
+      <div className={style.title}>
+        <h3>菜单列表</h3>
+        <Button type='primary' onClick={()=>setOpen(true)}>添加菜单</Button>
+      </div>
+      <Table<permissionListItem>
+        columns={columns}
+        dataSource={dataSource}
+        size="middle"
+        pagination={false}
+        rowKey='_id'
+      />
+      <DrawerCom
+        open={open!}
+        changeOpen={setOpen}
+        list={permissionList!}
+        refresh={getPermissionList}
+        editRow={editRow}
+        changeRow={setEditRow}
+      />
+    </>
+  )
+};
 
 export default Power;

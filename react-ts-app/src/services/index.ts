@@ -31,7 +31,8 @@ import {
   StudentCreateParams,
   examParamsType,
   permissionListType,
-  roleListType
+  roleListType,
+  PermissionCreateParams
 } from './type'
 
 
@@ -220,3 +221,15 @@ export const roleEditApi = (params:{id:string,name:string,permission:string[]})=
   return request.post<{msg:string,code:number}>(`/role/update`,params)
 }
 
+// 创建权限菜单
+export const permissionCreateApi = (params: PermissionCreateParams)=>{
+  return request.post<BaseType<null>>('/permission/create', params)
+}
+// 编辑权限菜单
+export const permissionEditApi = (params: {id:string} & PermissionCreateParams)=>{
+  return request.post<BaseType<null>>('/permission/update', params)
+}
+// 删除权限菜单
+export const permissionDeleteApi = (params: {id:string})=>{
+  return request.post<BaseType<null>>('/permission/remove', params)
+}
