@@ -360,30 +360,20 @@ export type examParamsType = {
 }
 // 权限列表返回值类型
 export type permissionListType = {
-  list:{
-    name:string
-    classify:string
-    __v:number
-    createTime:string
-    creator:string
-    _id:string
-    disabled:boolean
-    isBtn:boolean
-    path:string
-    pid:string
-    children?:{
-      name:string
-      classify:string
-      __v:number
-      createTime:string
-      creator:string
-      _id:string
-      disabled:boolean
-      isBtn:boolean
-      path:string
-      pid:string
-    }[]
-  }[]
+  list: permissionListItem[]
+}
+export type permissionListItem = {
+  name:string
+  classify?:string
+  __v?:number
+  createTime:string
+  creator?:string
+  _id?:string
+  disabled?:boolean
+  isBtn:boolean | string
+  path:string
+  pid?:string
+  children?:permissionListItem[]
 }
 // 角色列表返回值类型
 export type roleListType = {
@@ -400,4 +390,13 @@ type roleListItemType = {
   __v:number
   disabled:boolean
   value:string
+}
+
+// 创建权限菜单接口参数类型
+export type PermissionCreateParams = {
+  name: string
+  pid: string
+  path: string
+  disabled: boolean
+  isBtn: boolean
 }

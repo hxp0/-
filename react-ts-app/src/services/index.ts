@@ -36,6 +36,7 @@ import {
   CreateUserParams,
   UserListType,
   updateUserParams,
+  PermissionCreateParams
 } from './type'
 
 
@@ -249,4 +250,17 @@ export const uploadAvatarApi = (avatar:FormData)=>{
 // 更新用户信息
 export const updateUserInfoApi = (params:Omit<infoDataType,'id' | 'permission' | 'role'>)=>{
   return request.post<{msg:string,code:number}>(`/user/update/info`,params)
+}
+
+// 创建权限菜单
+export const permissionCreateApi = (params: PermissionCreateParams)=>{
+  return request.post<BaseType<null>>('/permission/create', params)
+}
+// 编辑权限菜单
+export const permissionEditApi = (params: {id:string} & PermissionCreateParams)=>{
+  return request.post<BaseType<null>>('/permission/update', params)
+}
+// 删除权限菜单
+export const permissionDeleteApi = (params: {id:string})=>{
+  return request.post<BaseType<null>>('/permission/remove', params)
 }
