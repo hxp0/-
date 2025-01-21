@@ -139,14 +139,15 @@ const Create: React.FC = () => {
       }>
         formRef={formRef}
         onFinish={async (values:any) => {
+          console.log(values)
           // const res = await createRecordApi({
           //   name:userInfo.username,
           //   classify:values.subject,
-          //   examId:values.examId,
           //   examiner:values.examId,
           //   group:values.group,
           //   startTime:values.dateTime[0],
           //   endTime:values.dateTime[1],
+          //   examId:values.examId,
           // })
           // console.log(res.data)
           // if(res.data.code === 200){
