@@ -1,11 +1,13 @@
 import type {ProColumns } from '@ant-design/pro-components'
 import type { StudentGroupListItemType } from '../../../services/type'
+import PermissionButton from '../../../components/PermissionButton'
 
 interface Params {
   changeDrawerOpen: (row: StudentGroupListItemType )=>void
+  delFn: (id: string)=>void
 }
 
-export const operateFn = ({ changeDrawerOpen }: Params) =>{
+export const operateFn = ({ changeDrawerOpen, delFn }: Params) =>{
   const columns: ProColumns<StudentGroupListItemType>[] = [
     {
       dataIndex: 'index',
@@ -83,9 +85,17 @@ export const operateFn = ({ changeDrawerOpen }: Params) =>{
             action?.startEditable?.(record._id);
           }}
         > 编辑 </a>,
+        <PermissionButton perKey='groupDelBtn'> 
+          <a
+            onClick={() => {
+              delFn(record._id);
+            }}
+          > 删除 </a>
+        </PermissionButton>,
         <a
           key="view"
           onClick={() => {
+            console.log(text)
             changeDrawerOpen(record)
           }}
         > 查看 </a>,

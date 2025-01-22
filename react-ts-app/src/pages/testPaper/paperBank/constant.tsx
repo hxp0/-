@@ -1,6 +1,7 @@
 import type { ProColumns } from '@ant-design/pro-components'
 import { Button,Modal,message } from 'antd'
 import {DeleteExamApi,examApi} from '../../../services'
+import PermissionButton from '../../../components/PermissionButton'
 
 
 const ondelete = async(id:string)=>{
@@ -99,14 +100,16 @@ const getColumns = (setOpen:(val:boolean)=>void,setLoading:(val:boolean)=>void,s
               action?.startEditable?.(record._id)
             }}
           >编辑</Button>,
-          <Button type='default' 
-            key='2'
-            style={{background:'#ff4d4f',color:'#fff',border:'none'}} 
-            onClick={()=>{
-              ondelete(record._id)
-              action?.reload()
-            }}
-          >删除</Button>,
+          <PermissionButton perKey='paperDel'>
+            <Button type='default' 
+              key='2'
+              style={{background:'#ff4d4f',color:'#fff',border:'none'}} 
+              onClick={()=>{
+                ondelete(record._id)
+                action?.reload()
+              }}
+            >删除</Button>
+          </PermissionButton>,
           <Button 
             type='default'
             key='3'

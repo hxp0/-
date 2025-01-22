@@ -21,7 +21,22 @@ const Student: React.FC = ()=> {
     setDrawerOpen(true)
   }
 
-  const columns = operateFn({ changeDrawerOpen })
+  const delFn = async(id: string)=>{
+    try{
+      const res = await StudentDeleteApi({ id })
+      console.log(res.data)
+      if( res.data.code === 200 ){
+        message.success('删除成功！')
+        actionRef.current?.reload()
+      }else{
+        message.error(res.data.msg)
+      }
+    }catch(e){
+      console.log(e)
+    }
+  }
+
+  const columns = operateFn({ changeDrawerOpen, delFn })
 
   return (
     <>
@@ -64,21 +79,10 @@ const Student: React.FC = ()=> {
               console.log(e)
             }
           },
-          onDelete: async( rowKey ) => {
-            const key = rowKey as string;
-            try{
-              const res = await StudentDeleteApi({ id: key })
-              console.log(res.data)
-              if( res.data.code === 200 ){
-                message.success('删除成功！')
-                actionRef.current?.reload()
-              }else{
-                message.error(res.data.msg)
-              }
-            }catch(e){
-              console.log(e)
-            }
-          }
+          actionRender: (row, config, dom) => {
+            console.log(row,config)
+            return [dom.save, dom.cancel];
+          },
         }}
         rowKey="_id"
         search={{

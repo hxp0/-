@@ -34,7 +34,6 @@ import {
   permissionListType,
   roleListType,
   CreateUserParams,
-  UserListType,
   updateUserParams,
   PermissionCreateParams
 } from './type'
