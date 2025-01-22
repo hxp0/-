@@ -400,3 +400,16 @@ export type PermissionCreateParams = {
   disabled: boolean
   isBtn: boolean
 }
+
+// 查询学生考试列表返回值类型
+export type StudentExamListType = {
+  list: []
+}
+export type StudentExamListItem = {
+  "_id": string
+  "className": string
+  "examId": string
+  "examinationId": string
+  "startTime": number
+  "endTime": number
+}

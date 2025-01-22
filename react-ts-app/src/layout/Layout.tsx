@@ -130,11 +130,19 @@ const Layout: React.FC<{ children: React.ReactNode }> = (props) => {
                           icon: <LogoutOutlined />,
                           label: '退出登录',
                           onClick:()=>{
+                            if( localStorage.getItem('loginType') === 'student' ){
+                              message.success('退出登录成功')
+                              navigate('/user/login')
+                              localStorage.removeItem('token')
+                              localStorage.removeItem('loginType')
+                              return
+                            }
                             logoutApi()
                             .then(()=>{
                                 message.success('退出登录成功')
                                 navigate('/user/login')
                                 localStorage.removeItem('token')
+                                localStorage.removeItem('loginType')
                             })
                           }
                         }

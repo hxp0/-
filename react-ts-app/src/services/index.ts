@@ -35,7 +35,8 @@ import {
   roleListType,
   CreateUserParams,
   updateUserParams,
-  PermissionCreateParams
+  PermissionCreateParams,
+  StudentExamListType
 } from './type'
 
 
@@ -47,6 +48,11 @@ export const getCaptchaApi = async()=>{
 // 登录接口
 export const getLoginApi = async( params:LoginParams )=>{
   const res = await request.post<BaseType<LoginType>>('/login', params)
+  return res
+}
+// 学生登录接口
+export const getStudentLoginApi = async( params:LoginParams )=>{
+  const res = await request.post<BaseType<LoginType>>('/login/student', params)
   return res
 }
 // 退出登录
@@ -262,4 +268,9 @@ export const permissionEditApi = (params: {id:string} & PermissionCreateParams)=
 // 删除权限菜单
 export const permissionDeleteApi = (params: {id:string})=>{
   return request.post<BaseType<null>>('/permission/remove', params)
+}
+
+// 查询学生考试列表
+export const StudentExamApi = ()=>{
+  return request.get<BaseType<StudentExamListType>>('student/exam')
 }

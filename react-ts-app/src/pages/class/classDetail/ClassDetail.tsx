@@ -1,12 +1,7 @@
 import React from 'react'
-
-const ClassDetail = ()=> {
-    return (
-        <div>
-            ClassDetail
-        </div>
-    );
+const ClassDetail: React.FC = ()=> {
+  return (
+    <div>班级详情</div>
+  );
 }
-
-
 export default ClassDetail

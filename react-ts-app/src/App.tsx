@@ -11,11 +11,12 @@ const App: React.FC = () => {
   const routes = useRoutes(roureConfig)
   const dispatch = useDispatch<AppDispatch>()
 
-
   useEffect(()=>{
       dispatch(getInfo())
-      dispatch(getMenuList()) 
-      dispatch(getQuestionType())
+      if( localStorage.getItem('loginType') === 'teacher' ){
+        dispatch(getMenuList()) 
+        dispatch(getQuestionType())
+      }
   },[])
   return (
     <Suspense fallback={<div>Loading...</div>}>
