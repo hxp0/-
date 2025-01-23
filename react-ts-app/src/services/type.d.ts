@@ -391,7 +391,7 @@ export type roleListType = {
   total:number
   list:roleListItemType[] 
 }
-type roleListItemType = {
+export type roleListItemType = {
   name:string
   _id:string
   createTime:number

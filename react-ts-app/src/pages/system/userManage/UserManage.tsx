@@ -1,23 +1,28 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { getUserApi } from '../../../services/index'
+import { getUserApi, roleListApi, updateUserApi } from '../../../services/index'
 import type { UserListType } from '../../../services/type'
 import { PlusOutlined } from '@ant-design/icons';
-import type { ActionType} from '@ant-design/pro-components';
+import type { ActionType, ProFormInstance} from '@ant-design/pro-components';
 import { ProTable, ModalForm, ProFormSelect } from '@ant-design/pro-components';
 import { Button, message } from 'antd';
 import CreateUserModal from './components/CreateUserModal'
 import { getColumns } from './constants'
 
 
-
 const UserManage: React.FC =  () => {
   const actionRef = useRef<ActionType>();
   const [visible, setVisible] = useState(false)
   const [editRecord, setEditRecord] = useState<UserListType | null>(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [delID, setDelID] = useState('')
+  const formRef = useRef<ProFormInstance>()
+  const [roleOpen, setRoleOpen] = useState<boolean>(false)
 
   const columns = getColumns({
+    onClickRole: record => {
+      setEditRecord(record)
+      setRoleOpen(true)
+    },
     onClickEdit: record => {
       setVisible(true)
       setEditRecord(record)
@@ -25,14 +30,9 @@ const UserManage: React.FC =  () => {
     onClickDel: record => {
       setIsModalOpen(true)
       setDelID(record._id)
-      console.log(record)
     },
-    onClickRole: record => {
-      console.log(record)
-      setIsModalOpen(true)
-      
-    }
   })
+
   useEffect(() => {
     if(!visible) {
       setEditRecord(null)
@@ -49,7 +49,6 @@ const UserManage: React.FC =  () => {
         actionRef={actionRef}
         cardBordered
         request={async (params) => {
-          console.log(params)
           const { current, pageSize, ...others } = params
           const res = await getUserApi({ 
             page:current!,
@@ -70,9 +69,6 @@ const UserManage: React.FC =  () => {
           persistenceType: 'localStorage',
           defaultValue: {
             option: { fixed: 'right', disable: true },
-          },
-          onChange(value) {
-            console.log('value: ', value);
           },
         }}
         rowKey="_id"
@@ -118,17 +114,33 @@ const UserManage: React.FC =  () => {
       />
       <ModalForm
         title="分配角色"
-        open={isModalOpen}
-        submitter={{
-          searchConfig: {
-            submitText: '确认',
-            resetText: '取消',
-          },
+        formRef={formRef}
+        open={roleOpen}
+        onOpenChange={(roleOpen) => {
+          if(roleOpen) {
+            formRef.current?.setFieldsValue({
+              role: editRecord?.role,
+            })
+          } else {
+            formRef.current?.resetFields()
+            setEditRecord(null)
+          }
+        }}
+        modalProps={{
+          onCancel: () => setRoleOpen(false),
         }}
         onFinish={async (values) => {
-          console.log(values);
-          message.success('提交成功');
-          return true;
+          const res = await updateUserApi({
+            ...values,
+            id: editRecord!._id,
+          })
+          if(res.data.code === 200) {
+            setRoleOpen(false)
+            message.success('提交成功');
+            actionRef.current?.reload()
+          } else {
+            message.error(res.data.msg)
+          }
         }}
       >
         <ProFormSelect
@@ -136,10 +148,15 @@ const UserManage: React.FC =  () => {
           name="role"
           mode='multiple'
           placeholder="请选择用户角色"
-          rules={[{ required: true,}]}
           request={async () => {
-            const res = await 
+            const res = await roleListApi()
+            // console.log(res.data.data.list)
+            return res.data.data.list.map(item => ({
+                value: item.value,
+                label: item.name,
+            }))
           }}
+          rules={[{ required: true, message: '请选择角色!' }]}
         />
       </ModalForm>
 
