@@ -43,9 +43,9 @@ const Create: React.FC = () => {
   const [createSubject,setCreateSubject] = useState<createSubjectType>()
   const [data,setData] = useState<ExamListItemType[]>([])
   const [selectionType, setSelectionType] = useState<'checkbox' | 'radio'>('checkbox')
+
   const navigate = useNavigate()
   const userInfo = useSelector((state:RootState) => state.info.info)
-
   // 获取班级
   const requestClass = async () => {
     const res = await getClassApi({
@@ -54,7 +54,8 @@ const Create: React.FC = () => {
     })
     const classList = res.data.data.list.map(item => {
       return {
-        value:item.name
+        value:item.name,
+        id:item._id
       }
     }).reduce((pre,cur) => {
       if(!pre.find(item => item.value === cur.value)){
@@ -64,7 +65,6 @@ const Create: React.FC = () => {
     },[] as {value:string}[])
     setOptions(classList)
     return classList
-    
   }
   // 获取科目
   const requestSubject = async () => {
@@ -154,6 +154,7 @@ const Create: React.FC = () => {
             message.success('提交成功')
             navigate('/exam/record')
           // }
+          return true
         }}
         formProps={{
           validateMessages: {
