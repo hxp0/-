@@ -7,6 +7,7 @@ import Create from '../pages/exam/create/Create'
 import { lazy } from 'react'
 import { Navigate } from 'react-router-dom'
 import Permission from './Permission'
+import MineExam from '../pages/studentSystem/MineExam'
 
 export const Home = lazy(()=> import('../pages/home/Home'))
 export const ClassList = lazy(()=> import('../pages/class/classList/ClassList'))
@@ -52,7 +53,8 @@ const routes =  [
   { path: '/paper/create-paper', element: <AddPaper />, layout: true, permission: true },
   { path: '/user/login', element: <Login /> },
   { path: '*', element: <NotFound /> },
-  { path: '/403', element: <Forbidden /> }
+  { path: '/403', element: <Forbidden /> },
+  { path: '/studentSystem', element: <MineExam />, layout: true }
 ]
 
 export default routes.map(route => {

@@ -57,6 +57,13 @@ const Layout: React.FC<{ children: React.ReactNode }> = (props) => {
     name:'首页',
     icon: <HomeOutlined />
   })
+  if( localStorage.getItem('loginType') !== 'teacher' ){
+    arr.route.routes.splice(1, 0, {
+      path:'studentSystem',
+      name:'我的考试',
+      icon: <HomeOutlined />
+    })
+  }
     return arr
   },[menuList])
 

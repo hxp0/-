@@ -406,10 +406,10 @@ export type StudentExamListType = {
   list: []
 }
 export type StudentExamListItem = {
-  "_id": string
-  "className": string
-  "examId": string
-  "examinationId": string
-  "startTime": number
-  "endTime": number
+  _id: string
+  className: string
+  examId: string
+  examinationId: string
+  startTime: number
+  endTime: number
 }

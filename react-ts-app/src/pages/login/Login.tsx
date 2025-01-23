@@ -58,6 +58,7 @@ const Login: React.FC = () => {
         localStorage.setItem('token', res.data.data?.token!)
         navigate('/')
         message.success('登录成功')
+        location.reload()
         dispatch(getInfo())
         if( loginType === 'teacher' ){
           dispatch(getMenuList()) 
